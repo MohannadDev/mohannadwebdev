@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import AnimatedText from '@/components/AnimatedText';
+import AnimatedText from '@/components/UI/AnimatedText';
 import Link from 'next/link';
 
 // Sample project data

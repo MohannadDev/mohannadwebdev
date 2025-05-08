@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import AnimatedText from '@/components/AnimatedText';
+import AnimatedText from '@/components/UI/AnimatedText';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -59,14 +59,14 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen py-20 px-4">
+    <div className="min-h-screen px-4 py-20">
       <div className="max-w-3xl mx-auto">
         <AnimatedText 
           text="Get In Touch" 
-          className="text-4xl md:text-6xl font-bold mb-8 text-center" 
+          className="mb-8 text-4xl font-bold text-center md:text-6xl" 
         />
         
-        <p className="text-gray-600 dark:text-gray-300 text-center mb-12">
+        <p className="mb-12 text-center text-gray-600 dark:text-gray-300">
           Have a question or want to work together? Feel free to reach out to me
           using the form below, and I'll get back to you as soon as possible.
         </p>
@@ -90,10 +90,10 @@ export default function Contact() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
+          className="p-8 bg-white shadow-lg dark:bg-gray-800 rounded-xl"
         >
           <div className="mb-6">
-            <label htmlFor="name" className="block text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="name" className="block mb-2 text-gray-700 dark:text-gray-300">
               Name
             </label>
             <input
@@ -103,12 +103,12 @@ export default function Contact() {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="email" className="block mb-2 text-gray-700 dark:text-gray-300">
               Email
             </label>
             <input
@@ -118,12 +118,12 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="subject" className="block text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="subject" className="block mb-2 text-gray-700 dark:text-gray-300">
               Subject
             </label>
             <input
@@ -133,12 +133,12 @@ export default function Contact() {
               value={formData.subject}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="message" className="block text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="message" className="block mb-2 text-gray-700 dark:text-gray-300">
               Message
             </label>
             <textarea
@@ -148,7 +148,7 @@ export default function Contact() {
               onChange={handleChange}
               required
               rows={6}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
             ></textarea>
           </div>
           
@@ -166,12 +166,12 @@ export default function Contact() {
         </motion.form>
         
         <div className="mt-16 text-center">
-          <h3 className="text-xl font-bold mb-4">Other Ways to Connect</h3>
-          <div className="flex flex-col md:flex-row justify-center gap-6">
+          <h3 className="mb-4 text-xl font-bold">Other Ways to Connect</h3>
+          <div className="flex flex-col justify-center gap-6 md:flex-row">
             <div className="flex items-center justify-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-blue-600"
+                className="w-6 h-6 text-blue-600"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -193,7 +193,7 @@ export default function Contact() {
             <div className="flex items-center justify-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-blue-600"
+                className="w-6 h-6 text-blue-600"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

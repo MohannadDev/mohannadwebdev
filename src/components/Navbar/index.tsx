@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavMenu } from "./menu";
-import AnimatedText from "../AnimatedText";
+import Link from "next/link";
+// import AnimatedText from "../UI/AnimatedText";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,22 +40,24 @@ export default function Navbar() {
       >
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <motion.div className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
-                ></path>
-              </svg>
-              <AnimatedText text="Mohannad" className="text-textHighlight" />
+            <motion.div >
+              <Link href="/" className="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
+                  ></path>
+                </svg>
+                <p className="px-2 highlight"> Mohannad</p>
+              </Link>
             </motion.div>
 
             {/* Desktop menu */}

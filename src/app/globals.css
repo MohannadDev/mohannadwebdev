@@ -13,6 +13,43 @@
   --color-textMuted: #929292;
   --color-textHighlight: #eeede9;
 }
+@theme {
+  --animate-shine: shine 5s linear infinite;
+  --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
+  --animate-star-movement-top: star-movement-top linear infinite alternate;
+  
+    @keyframes shine {
+    from {
+      background-position: 0% 50%;
+      opacity: 1;
+    }
+    to {
+      background-position: 100% 50%;
+      opacity: 0;
+    }
+  }
+  @keyframes star-movement-top {
+    from {
+      transform: translate(0%, 0%);
+      opacity: 1; 
+    }
+    to {
+      transform: translate(100%, 0%);
+      opacity: 0;
+    }
+  }
+  @keyframes star-movement-bottom {
+    from {
+      transform: translate(0%, 0%);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-100%, 0%);
+      opacity: 0;
+    }
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: --color-bgDark; */
@@ -28,6 +65,9 @@ body {
   /* background: var(--background); */
   /* color: var(--foreground); */
   font-family: "IBM Plex Sans", system-ui, sans-serif;
+}
+body * {
+  @apply transition duration-150 ease-in-out;
 }
 h1,
 h2,
@@ -55,3 +95,10 @@ h5,
 h6 {
   font-family: "Space Grotesk", system-ui, sans-serif;
 }
+.highlight,
+.highlight * {
+  @apply text-textHighlight;
+}
+/* a:hover {
+  @apply text-textHighlight;
+} */

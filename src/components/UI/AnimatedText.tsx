@@ -8,10 +8,8 @@ interface AnimatedTextProps {
 }
 
 export default function AnimatedText({ text, className = '' }: AnimatedTextProps) {
-  // Split text into array of words
   const words = text.split(' ');
 
-  // Animation variants for container
   const container = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
@@ -20,7 +18,6 @@ export default function AnimatedText({ text, className = '' }: AnimatedTextProps
     }),
   };
 
-  // Animation variants for each word
   const child = {
     visible: {
       opacity: 1,

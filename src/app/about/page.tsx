@@ -1,4 +1,4 @@
-import AnimatedText from '@/components/AnimatedText';
+import AnimatedText from '@/components/UI/AnimatedText';
 // import Image from 'next/image';
 import { motion } from 'framer-motion';
 
