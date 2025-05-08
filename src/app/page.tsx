@@ -4,7 +4,7 @@
 
 export default function Home() {
   return (
-<div className="bg-bgDark h-[200vh]">
+<div className="bg-bgDark h-[200vh] text-white">
   continue
 </div>
     // <div className="min-h-screen">

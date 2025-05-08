@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/index";
 import Footer from "@/components/Footer";
 import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 
