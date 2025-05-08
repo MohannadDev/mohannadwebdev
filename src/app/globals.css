@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+@theme inline {
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --color-primary: #002333;
+  --color-bgDark: #212121;
+  --color-bgLight: #eeedea;
+  --color-textMuted: #929292;
+  --color-textHighlight: #eeede9;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --background: --color-bgDark; */
+    /* --foreground: #ededed; */
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* background: var(--background); */
+  /* color: var(--foreground); */
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a {
+  color: var(--color-textMuted);
+}
+body *::selection {
+  color: var(--color-textHighlight);
+}
+svg path {
+  color: var(--color-textHighlight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
