@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavMenu } from "./menu";
 import Link from "next/link";
-import ContactDetails from "./ContactDetails";
+import { ContactContext } from "@/context/ContactContext";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const { toggleContact } = useContext(ContactContext);
 
   const navItems: Array<{
     name: string;
@@ -21,20 +21,25 @@ export default function Navbar() {
     { name: "Contact", path: "/contact", variant: "from-cursor" },
   ];
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  };
+  
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-  
-  const toggleContact = () => setIsContactOpen(!isContactOpen);
-  const closeContact = () => {
-    setIsContactOpen(false);
-  };
 
+  // Define menu animation variants
+  const menuOverlayVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
+    exit: { opacity: 0, transition: { duration: 0.45, ease: "easeInOut" } }
+  };
+  
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 z-10 w-full bg-bgDark bg-opacity-80 backdrop-blur-md md:bg-opacity-95"
+        className="fixed top-0 left-0 z-10 w-full bg-bgDark backdrop-blur-md "
         initial={{ opacity: 0, y: -70 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -69,10 +74,7 @@ export default function Navbar() {
             <div className="hidden md:block">
               <motion.button
                 onClick={toggleContact}
-                className="custom-class px-4 py-2 rounded-[20px] bg-transparent 
-                      text-shadow-white 
-                     hover:text-white 
-                     transition-colors duration-600"
+                className="py-2 transition-colors rounded-sm x-4 x text-bgDark custom-class bg-bgLight"
               >
                 Let&apos;s Talk
               </motion.button>
@@ -113,14 +115,16 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-20 bg-black"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.9 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            key="mobile-menu-overlay"
+            className="fixed z-20 w-screen h-screen bg-transparent backdrop-blur-lg"
+            variants={menuOverlayVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            onClick={closeMenu}
           >
             <div className="flex items-center justify-center h-full">
               <button
@@ -142,14 +146,15 @@ export default function Navbar() {
                   ></path>
                 </svg>
               </button>
-              <NavMenu items={navItems} isMobile={true} />
+              <NavMenu 
+                items={navItems} 
+                isMobile={true} 
+                onItemClick={closeMenu}
+                onClose={closeMenu}
+              />
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
-      
-      <AnimatePresence>
-        {isContactOpen && <ContactDetails closeContact={closeContact}/>}
       </AnimatePresence>
     </>
   );

@@ -60,17 +60,35 @@ export const NavMenu = ({
   if (isMobile) {
     return (
       <motion.div
-        className="fixed top-0 right-0 w-4/5 h-screen pt-20 z-70 bg-bgLight"
+        className="fixed top-0 right-0 w-4/5 h-screen pt-20 bg-white z-70"
         initial={{ opacity: 0, x: "100%" }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
-        transition={{ duration: 0.4, ease: "easeInOut", stiffness: 300, damping: 30 }}
+        transition={{ 
+          // type: "spring",
+          // stiffness: 80,
+          // damping: 20,
+          // mass: 0.8,
+          // restDelta: 0.001,
+          // restSpeed: 0.001,
+          // exit: { 
+          //   type: "tween", 
+          //   duration: 0.5, 
+          //   ease: [0.32, 0.72, 0, 1] }
+          type: "tween",
+          duration: 0.35,
+          ease: "easeOut",
+          exit: { 
+            duration: 0.45, 
+            ease: "easeInOut"
+          }
+        }}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button inside NavMenu  */}
         <div
           className="absolute top-5 right-7 z-100"
           onClick={(e) => {
-            e.stopPropagation(); // Prevent event from bubbling to parent divs
+            e.stopPropagation(); 
             if (onClose) onClose();
           }}
         >
@@ -102,7 +120,15 @@ export const NavMenu = ({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: i * 0.1, duration: 0.3, ease: "easeOut" }}
+              transition={{ 
+                delay: i * 0.04,
+                duration: 0.25,
+                ease: "easeOut",
+                exit: {
+                  duration: 0.35,
+                  ease: "easeInOut"
+                }
+              }}
             >
               <NavItem
                 path={item.path}

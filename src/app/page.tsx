@@ -9,10 +9,12 @@ import { motion } from "framer-motion"; // Import motion
 import Stepper, { Step } from "@/components/UI/Steper";
 // import Image from "next/image";
 import DecryptedText from "@/components/UI/Decrypted";
-// import { useContact } from "@/context/ContactContext";
+import { useContext } from "react";
+import { ContactContext } from "@/context/ContactContext";
+import Link from "next/link";
 
 export default function Home() {
-  // const { toggleContact } = useContact();
+  const { toggleContact } = useContext(ContactContext);
 
   const buttonsFadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -21,20 +23,31 @@ export default function Home() {
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 1,
-        damping: 1,
-        mass: 0.5,
-        duration: 0.3,
+        stiffness: 100,
+        damping: 15,
+        duration: 0.4,
+        delay: 0.2,
       },
     },
   };
 
+  const buttonHoverVariants = {
+    hover: { 
+      scale: 1.05,
+      transition: { duration: 0.3, ease: "easeOut" } 
+    },
+    tap: { 
+      scale: 0.95,
+      transition: { duration: 0.1, ease: "easeIn" } 
+    }
+  };
+
   return (
     <>
-      <section className="flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white">
+      <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white">
         <div className="flex justify-center flex-col px-4 mx-auto md:max-w-[90vw] mt-10 md:mt-16">
           <SplitText
-            text="Hi, I’m Mohannad."
+            text="Hi, I'm Mohannad."
             className="text-3xl md:text-6xl highlight"
             delay={70}
             animationFrom={{ opacity: 0, transform: "translateY(50px)" }}
@@ -69,20 +82,23 @@ export default function Home() {
               as="button"
               btnClassName="hover:opacity-90 transition-colors duration-600 text-white"
               speed="5s"
-              // onClick={toggleContact}
-
-
+              onClick={toggleContact}
             >
               Let&apos;s Talk
             </StarBorder>
-            <button
-              className="custom-class px-4 py-[16px] rounded-[20px]  bg-transparent 
-                     text-shadow-white 
-                     hover:text-white
-                     transition-colors duration-600 "
-            >
-              Projects
-            </button>
+            <Link href="/projects">
+              <motion.button
+                className="custom-class px-4 py-[16px] rounded-[20px] bg-transparent 
+                      text-shadow-white 
+                      hover:text-white
+                      transition-colors duration-600 "
+                variants={buttonHoverVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                Projects
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
 
@@ -175,3 +191,4 @@ export default function Home() {
     </>
   );
 }
+

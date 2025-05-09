@@ -4,24 +4,55 @@ import StarBorder from "../UI/StarBorder";
 
 export default function ContactDetails({
   closeContact,
+  onAnimationComplete,
 }: {
   closeContact: () => void;
+  onAnimationComplete?: () => void;
 }) {
+  // Define animation variants
+  const overlayVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
+    exit: { opacity: 0, transition: { duration: 0.45, ease: "easeInOut" } }
+  };
+
+  const panelVariants = {
+    initial: { opacity: 0, x: "100%" },
+    animate: { 
+      opacity: 1, 
+      x: 0, 
+      transition: { 
+        type: "tween", 
+        duration: 0.35, 
+        ease: "easeOut" 
+      } 
+    },
+    exit: { 
+      opacity: 0, 
+      x: "100%", 
+      transition: { 
+        type: "tween", 
+        duration: 0.45, 
+        ease: "easeInOut" 
+      } 
+    }
+  };
+
   return (
     <motion.div
       className="fixed z-30 w-screen h-screen bg-transparent backdrop-blur-lg"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      variants={overlayVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       onClick={closeContact}
     >
       <motion.div
         className="fixed top-0 right-0 h-screen bg-[#1a1a1a] md:w-[70vw] w-[98vw]"
-        initial={{ opacity: 0, x: "100%" }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: "100%" }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        variants={panelVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col justify-between h-full p-10 text-gray-400 md:p-12">
@@ -39,7 +70,7 @@ export default function ContactDetails({
 
           {/* Main content */}
           <div className="flex-grow">
-            <h2 className="mb-12 text-xl font-light leading-tight tracking-wide text-gray-300 md:text-5xl">
+            <h2 className="mb-12 text-3xl font-light leading-tight tracking-wide text-gray-300 md:text-5xl">
               Ready to shape your next digital success? Let&apos;s chat.
             </h2>
             <StarBorder
@@ -69,7 +100,7 @@ export default function ContactDetails({
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </a>{" "}
+              </a>
             </StarBorder>
           </div>
 

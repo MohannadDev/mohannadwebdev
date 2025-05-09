@@ -1,53 +1,47 @@
-// 'use client';
+"use client";
 
-// import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode } from "react";
 
-// type ContactContextType = {
-//   isContactOpen: boolean;
-//   isAnimating: boolean;
-//   openContact: () => void;
-//   closeContact: () => void;
-//   toggleContact: () => void;
-// };
+type ContactContextType = {
+  isContactOpen: boolean;
+  toggleContact: () => void;
+  closeContact: () => void;
+  onAnimationComplete: () => void;
+};
 
-// const ContactContext = createContext<ContactContextType | undefined>(undefined);
+export const ContactContext = createContext<ContactContextType>({
+  isContactOpen: false,
+  toggleContact: () => {},
+  closeContact: () => {},
+  onAnimationComplete: () => {},
+});
 
-// export function ContactProvider({ children }: { children: ReactNode }) {
-//   const [isContactOpen, setIsContactOpen] = useState(false);
-//   const [isAnimating, setIsAnimating] = useState(false);
+export const ContactProvider = ({ children }: { children: ReactNode }) => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
-//   const openContact = () => setIsContactOpen(true);
+  const toggleContact = () => {
+    setIsContactOpen(prev => !prev);
+  };
   
-//   const closeContact = () => {
-//     // Set animating flag
-//     setIsAnimating(true);
-    
-//     // Delay state update to allow exit animation to complete
-//     setTimeout(() => {
-//       setIsContactOpen(false);
-//       setIsAnimating(false);
-//     }, 350); // Reduced from 600ms to match faster animations
-//   };
+  const closeContact = () => {
+    setIsContactOpen(false);
+  };
   
-//   const toggleContact = () => setIsContactOpen(prev => !prev);
+  // This will be called when the exit animation completes
+  const onAnimationComplete = () => {
+    // Add any cleanup code needed here
+  };
 
-//   return (
-//     <ContactContext.Provider value={{ 
-//       isContactOpen, 
-//       isAnimating,
-//       openContact, 
-//       closeContact, 
-//       toggleContact
-//     }}>
-//       {children}
-//     </ContactContext.Provider>
-//   );
-// }
-
-// export function useContact() {
-//   const context = useContext(ContactContext);
-//   if (context === undefined) {
-//     throw new Error('useContact must be used within a ContactProvider');
-//   }
-//   return context;
-// }
+  return (
+    <ContactContext.Provider
+      value={{
+        isContactOpen,
+        toggleContact,
+        closeContact,
+        onAnimationComplete,
+      }}
+    >
+      {children}
+    </ContactContext.Provider>
+  );
+};
