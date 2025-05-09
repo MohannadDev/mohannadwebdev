@@ -8,8 +8,15 @@ module.exports = {
   darkMode: 'media',
   theme: {
     extend: {
-  
+      colors: {
+        btnDark: 'var(--color-btnDark)',
+        btnLight: 'var(--color-btnLight)',
+        bgDark: 'var(--color-bgDark)',
+        bgLight: 'var(--color-bgLight)',
+        textMuted: 'var(--color-textMuted)',
+        textHighlight: 'var(--color-textHighlight)'
+      }
     }
   },
   plugins: [],
-}; 
+};

@@ -1,102 +1,133 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
+import HoverText from "../UI/HoverText";
 
 type NavItemProps = {
-    path: string;
+  path: string;
+  name: string;
+  onClick?: () => void;
+  isMobile?: boolean;
+  variant: "left-to-right" | "center-outward" | "random" | "from-cursor";
+};
+
+export const NavItem = ({
+  path,
+  name,
+  onClick,
+  isMobile = false,
+  variant,
+}: NavItemProps) => {
+  return (
+    <motion.div
+      className={`relative ${isMobile ? "w-full" : "px-1"}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      <Link
+        href={path}
+        onClick={onClick}
+        className="block px-3 py-2 font-medium rounded-md text-text-dark dark:text-text-white hover:text-primary dark:hover:text-primary"
+      >
+        <HoverText
+          text={name}
+          variant={variant}
+          baseColor="var(--color-textMuted)"
+          hoverColor="var(--color-textHighlight)"
+        />
+      </Link>
+    </motion.div>
+  );
+};
+
+type NavMenuProps = {
+  items: Array<{
     name: string;
-    onClick?: () => void;
-    isMobile?: boolean;
-  };
-  
-  export const NavItem = ({ path, name, onClick, isMobile = false }: NavItemProps) => {
+    path: string;
+    variant: "left-to-right" | "center-outward" | "random" | "from-cursor";
+  }>;
+  isMobile: boolean;
+  isOpen?: boolean;
+  onItemClick?: () => void;
+  onClose?: () => void;
+};
+
+export const NavMenu = ({
+  items,
+  isMobile,
+  onItemClick,
+  onClose,
+}: NavMenuProps) => {
+  if (isMobile) {
     return (
       <motion.div
-        className={`relative ${isMobile ? "w-full" : "px-1"}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        className="fixed top-0 right-0 w-4/5 h-screen pt-20 z-70 bg-bgLight"
+        initial={{ opacity: 0, x: "100%" }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: "100%" }}
+        transition={{ duration: 0.4, ease: "easeInOut", stiffness: 300, damping: 30 }}
       >
-        <Link
-          href={path}
-          onClick={onClick}
-          className="block px-3 py-2 font-medium rounded-md text-text-dark dark:text-text-white hover:text-primary dark:hover:text-primary"
-        >
-          {name}
-        </Link>
-      </motion.div>
-    );
-  };
-  
-  type NavMenuProps = {
-    items: Array<{ name: string; path: string }>;
-    isMobile: boolean;
-    isOpen?: boolean;
-    onItemClick?: () => void;
-    onClose?: () => void;
-  };
-  
-  export const NavMenu = ({ items, isMobile, onItemClick, onClose }: NavMenuProps) => {
-    if (isMobile) {
-      return (
-        <motion.div
-          className="fixed top-0 right-0 w-4/5 h-screen pt-20 z-70 bg-bgLight"
-          initial={{ opacity: 0, x: "100%"  }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: "100%" }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          {/* Close button inside NavMenu  */}
-          <div className="absolute top-5 right-7 z-100" onClick={(e) => {
+        {/* Close button inside NavMenu  */}
+        <div
+          className="absolute top-5 right-7 z-100"
+          onClick={(e) => {
             e.stopPropagation(); // Prevent event from bubbling to parent divs
             if (onClose) onClose();
-          }}>
-            <motion.button
-              className="p-2 rounded-lg focus:outline-none bg-bgDark"
-              whileTap={{ scale: 0.95 }}
+          }}
+        >
+          <motion.button
+            className="p-2 rounded-lg focus:outline-none bg-bgDark"
+            whileTap={{ scale: 0.95 }}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              style={{ color: "var(--color-textHighlight)" }}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                style={{ color: "var(--color-textHighlight)" }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </motion.button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </motion.button>
+        </div>
 
-          <div className="flex flex-col justify-center p-8 h-8/10">
-            {items.map((item, i) => (
-              <motion.div
-                key={item.path}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <NavItem
-                  path={item.path}
-                  name={item.name}
-                  onClick={onItemClick}
-                  isMobile={true}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      );
-    }
-  
-    return (
-      <div className="items-center hidden space-x-1 md:flex">
-        {items.map((item) => (
-          <NavItem key={item.path} path={item.path} name={item.name} />
-        ))}
-      </div>
+        <div className="flex flex-col justify-center p-8 h-8/10">
+          {items.map((item, i) => (
+            <motion.div
+              key={item.path}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ delay: i * 0.1, duration: 0.3, ease: "easeOut" }}
+            >
+              <NavItem
+                path={item.path}
+                name={item.name}
+                onClick={onItemClick}
+                isMobile={true}
+                variant={item.variant}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     );
-  };
+  }
+
+  return (
+    <div className="items-center hidden space-x-1 md:flex">
+      {items.map((item) => (
+        <NavItem
+          key={item.path}
+          path={item.path}
+          name={item.name}
+          variant={item.variant}
+        />
+      ))}
+    </div>
+  );
+};

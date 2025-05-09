@@ -7,7 +7,8 @@
 @theme inline {
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
-  --color-primary: #002333;
+  --color-btnDark: #121212;
+  --color-btnLight: #929292;
   --color-bgDark: #212121;
   --color-bgLight: #eeedea;
   --color-textMuted: #929292;

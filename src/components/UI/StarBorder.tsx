@@ -7,6 +7,7 @@ type StarBorderProps<T extends React.ElementType> =
     children?: React.ReactNode;
     color?: string;
     speed?: React.CSSProperties['animationDuration'];
+    btnClassName?: string;
   }
 
 const StarBorder = <T extends React.ElementType = "button">({
@@ -15,6 +16,7 @@ const StarBorder = <T extends React.ElementType = "button">({
   color = "white",
   speed = "6s",
   children,
+  btnClassName = "",
   ...rest
 }: StarBorderProps<T>) => {
   const Component = as || "button";
@@ -35,7 +37,8 @@ const StarBorder = <T extends React.ElementType = "button">({
           animationDuration: speed,
         }}
       ></div>
-      <div className="relative z-1 bg-gradient-to-b from-black to-gray-900 border border-gray-800 text-white text-center text-[16px] py-[16px] px-[26px] rounded-[20px]">
+      {/*  bg-gradient-to-b from-black to-btnDark border border-btnDark*/}
+      <div className={`relative z-1 bg-btnDark border-btnDark text-white text-center text-[16px] py-[16px] px-[26px] rounded-[20px] ${btnClassName}`}>
         {children}
       </div>
     </Component>
@@ -44,24 +47,3 @@ const StarBorder = <T extends React.ElementType = "button">({
 
 export default StarBorder;
 
-// tailwind.config.js
-// module.exports = {
-//   theme: {
-//     extend: {
-//       animation: {
-//         'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
-//         'star-movement-top': 'star-movement-top linear infinite alternate',
-//       },
-//       keyframes: {
-//         'star-movement-bottom': {
-//           '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-//           '100%': { transform: 'translate(-100%, 0%)', opacity: '0' },
-//         },
-//         'star-movement-top': {
-//           '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-//           '100%': { transform: 'translate(100%, 0%)', opacity: '0' },
-//         },
-//       },
-//     },
-//   }
-// }

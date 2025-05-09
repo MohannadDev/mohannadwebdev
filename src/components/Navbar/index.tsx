@@ -4,115 +4,152 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavMenu } from "./menu";
 import Link from "next/link";
-// import AnimatedText from "../UI/AnimatedText";
+import ContactDetails from "./ContactDetails";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Projects", path: "/projects" },
-    { name: "Contact", path: "/contact" },
+  const navItems: Array<{
+    name: string;
+    path: string;
+    variant: "left-to-right" | "center-outward" | "random" | "from-cursor";
+  }> = [
+    { name: "Home", path: "/", variant: "from-cursor" },
+    { name: "About", path: "/about", variant: "from-cursor" },
+    { name: "Projects", path: "/projects", variant: "from-cursor" },
+    { name: "Contact", path: "/contact", variant: "from-cursor" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+  
+  const toggleContact = () => setIsContactOpen(!isContactOpen);
+  const closeContact = () => {
+    setIsContactOpen(false);
+  };
 
   return (
     <>
-      {/* Backdrop overlay */}
-      {/* {isMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed z-40 w-screen h-screen bg-transparent md:hidden backdrop-blur-xl"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )} */}
-
       <motion.nav
-        className="fixed top-0 w-full"
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed top-0 left-0 z-10 w-full bg-bgDark bg-opacity-80 backdrop-blur-md md:bg-opacity-95"
+        initial={{ opacity: 0, y: -70 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <motion.div >
+            <motion.div>
               <Link href="/" className="flex items-center">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-9 h-9"
                   fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
+                  height="24"
                   stroke="currentColor"
-                  className="size-6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
                     d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
                   ></path>
                 </svg>
-                <p className="px-2 highlight"> Mohannad</p>
               </Link>
             </motion.div>
 
-            {/* Desktop menu */}
-            <NavMenu items={navItems} isMobile={false} />
+            <div className="items-center justify-center hidden md:flex">
+              <NavMenu items={navItems} isMobile={false} />
+            </div>
 
-            {/* Mobile menu button - hamburger only (shown when menu is closed) */}
-            {!isMenuOpen && (
-              <div className="flex items-center md:hidden z-100">
-                <motion.button
-                  onClick={toggleMenu}
-                  className="p-2 rounded-lg focus:outline-none"
-                  whileTap={{ scale: 0.95 }}
-                  style={{ zIndex: 60 }}
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    style={{ color: "var(--color-textHighlight)" }}
+            <div className="hidden md:block">
+              <motion.button
+                onClick={toggleContact}
+                className="custom-class px-4 py-2 rounded-[20px] bg-transparent 
+                      text-shadow-white 
+                     hover:text-white 
+                     transition-colors duration-600"
+              >
+                Let&apos;s Talk
+              </motion.button>
+            </div>
+
+            <div className="flex items-center md:hidden z-100">
+              {!isMenuOpen && (
+                <>
+                  <button
+                    onClick={toggleContact}
+                    className="px-3 py-1 mx-3 text-sm text-white border border-white rounded-md hover:bg-white hover:text-black"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                </motion.button>
-              </div>
-            )}
+                    Let&apos;s talk
+                  </button>
+                  <button
+                    onClick={toggleMenu}
+                    className="p-2 text-white rounded-md focus:outline-none"
+                  >
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16m-7 6h7"
+                      ></path>
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Backdrop with mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed z-20 w-screen h-screen bg-transparent backdrop-blur-lg"
+            className="fixed inset-0 z-20 bg-black"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.9 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            onClick={closeMenu}
+            transition={{ duration: 0.3 }}
           >
-            <NavMenu
-              items={navItems}
-              isMobile={true}
-              isOpen={isMenuOpen}
-              onItemClick={closeMenu}
-              onClose={closeMenu}
-            />
+            <div className="flex items-center justify-center h-full">
+              <button
+                onClick={closeMenu}
+                className="absolute text-white top-5 right-5"
+              >
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+              <NavMenu items={navItems} isMobile={true} />
+            </div>
           </motion.div>
         )}
+      </AnimatePresence>
+      
+      <AnimatePresence>
+        {isContactOpen && <ContactDetails closeContact={closeContact}/>}
       </AnimatePresence>
     </>
   );
