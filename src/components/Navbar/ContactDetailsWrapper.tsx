@@ -13,7 +13,7 @@ export default function ContactDetailsWrapper() {
   } = useContext(ContactContext);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       {isContactOpen && (
         <ContactDetails 
           key="contact-details"

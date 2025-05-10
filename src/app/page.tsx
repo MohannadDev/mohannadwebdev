@@ -1,17 +1,15 @@
 "use client";
 
 import SplitText from "@/components/UI/SplitText";
-// import HoverText from "@/components/UI/HoverText";
 import AnimatedText from "@/components/UI/AnimatedText";
 import Threads from "@/components/UI/Threads";
 import StarBorder from "@/components/UI/StarBorder";
-import { motion } from "framer-motion"; // Import motion
+import { motion } from "framer-motion";
 import Stepper, { Step } from "@/components/UI/Steper";
-// import Image from "next/image";
-import DecryptedText from "@/components/UI/Decrypted";
+import Link from "next/link";
+import ScrollFloat from "@/components/UI/ScrollFloat";
 import { useContext } from "react";
 import { ContactContext } from "@/context/ContactContext";
-import Link from "next/link";
 
 export default function Home() {
   const { toggleContact } = useContext(ContactContext);
@@ -32,14 +30,14 @@ export default function Home() {
   };
 
   const buttonHoverVariants = {
-    hover: { 
+    hover: {
       scale: 1.05,
-      transition: { duration: 0.3, ease: "easeOut" } 
+      transition: { duration: 0.3, ease: "easeOut" },
     },
-    tap: { 
+    tap: {
       scale: 0.95,
-      transition: { duration: 0.1, ease: "easeIn" } 
-    }
+      transition: { duration: 0.1, ease: "easeIn" },
+    },
   };
 
   return (
@@ -112,83 +110,96 @@ export default function Home() {
           />
         </div>
       </section>
-      <section>
-        <div style={{ marginTop: "4rem" }}>
-          <DecryptedText
-            text="Customize me"
-            speed={100}
-            maxIterations={20}
-            characters="ABCD1234!?"
-            className="revealed"
-            parentClassName="all-letters"
-            encryptedClassName="encrypted"
-          />
+      <section id="HowItWorks" className="flex justify-center py-8 text-white bg-bgDark">
+        <div className="container">
+          <ScrollFloat
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="center bottom+=50%"
+            scrollEnd="bottom bottom-=40%"
+            stagger={0.03}
+            textClassName="text-3xl sm:text-5xl sm:px-[10%] text-textHighlight p-4 text-center"
+          >
+            How It Works!
+          </ScrollFloat>
+          <Stepper
+            initialStep={1}
+            onStepChange={(step) => {
+              console.log(step);
+            }}
+            onFinalStepCompleted={() => console.log("All steps completed!")}
+            backButtonText="Previous"
+            nextButtonText="Next"
+            stepCircleContainerClassName="bg-bgDark border-neutral-700"
+            stepContainerClassName="bg-bgDark"
+            contentClassName="bg-bgDark"
+            footerClassName="bg-bgDark"
+          >
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">1. Discovery</h2>
+              <p>
+                I begin by understanding your project goals, audience, and
+                requirements. This ensures the foundation of the project is
+                strong and aligned with your vision.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                2. Wireframing & Prototyping
+              </h2>
+              <p>
+                Before any code is written, I design the layout using tools like
+                Figma to visualize the structure and user flow, allowing for
+                feedback and early adjustments.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                3. UI Design Integration
+              </h2>
+              <p>
+                3. I excel in utilizing advanced front-end techniques to create
+                responsive, user-friendly interfaces. For projects that demand
+                extensive research and branding, collaborating with a
+                UI/UX designer<b> can enhance the results. </b> However, {" "} 
+                <b>
+                  I&apos;m fully equipped to deliver exceptional designs 
+                </b> {" "}
+                that perform flawlessly across all devices on my own.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                4. Modular & Scalable Code
+              </h2>
+              <p>
+                I develop using modern technologies like React and Tailwind CSS,
+                focusing on reusable components, scalability, and
+                maintainability.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                5. Cross-Browser Testing
+              </h2>
+              <p>
+                Every project is tested across multiple devices and browsers to
+                ensure it works smoothly for all users, regardless of how they
+                access it.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                6. Deployment & Handover
+              </h2>
+              <p>
+                I deploy the site to fast, secure platforms like Vercel and
+                provide helpful documentation or support for future updates.
+              </p>
+            </Step>
+          </Stepper>
         </div>
-        <Stepper
-          initialStep={1}
-          onStepChange={(step) => {
-            console.log(step);
-          }}
-          onFinalStepCompleted={() => console.log("All steps completed!")}
-          backButtonText="Previous"
-          nextButtonText="Next"
-        >
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">1. Discovery</h2>
-            <p>
-              I begin by understanding your project goals, audience, and
-              requirements. This ensures the foundation of the project is strong
-              and aligned with your vision.
-            </p>
-          </Step>
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">
-              2. Wireframing & Prototyping
-            </h2>
-            <p>
-              Before any code is written, I design the layout using tools like
-              Figma to visualize the structure and user flow, allowing for
-              feedback and early adjustments.
-            </p>
-          </Step>
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">3. UI Design Integration</h2>
-            <p>
-              I bring designs to life using modern front-end techniques. While I
-              can handle UI design for responsive and user-friendly interfaces,
-              I recommend collaborating with a dedicated UI/UX designer for
-              projects needing extensive user research and branding. However, if
-              you&apos;re on a budget, I can still deliver high-quality designs that
-              work well across devices.
-            </p>
-          </Step>
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">
-              4. Modular & Scalable Code
-            </h2>
-            <p>
-              I develop using modern technologies like React and Tailwind CSS,
-              focusing on reusable components, scalability, and maintainability.
-            </p>
-          </Step>
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">5. Cross-Browser Testing</h2>
-            <p>
-              Every project is tested across multiple devices and browsers to
-              ensure it works smoothly for all users, regardless of how they
-              access it.
-            </p>
-          </Step>
-          <Step>
-            <h2 className="mb-2 text-xl font-bold">6. Deployment & Handover</h2>
-            <p>
-              I deploy the site to fast, secure platforms like Vercel and
-              provide helpful documentation or support for future updates.
-            </p>
-          </Step>
-        </Stepper>
       </section>
     </>
   );
 }
-

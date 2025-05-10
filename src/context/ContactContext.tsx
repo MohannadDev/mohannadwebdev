@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useCallback } from "react";
 
 type ContactContextType = {
   isContactOpen: boolean;
@@ -18,19 +18,22 @@ export const ContactContext = createContext<ContactContextType>({
 
 export const ContactProvider = ({ children }: { children: ReactNode }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
-
-  const toggleContact = () => {
-    setIsContactOpen(prev => !prev);
-  };
   
-  const closeContact = () => {
+  // Use useCallback to prevent unnecessary re-renders
+  const toggleContact = useCallback(() => {
+    setIsContactOpen(prev => !prev);
+  }, []);
+  
+  const closeContact = useCallback(() => {
     setIsContactOpen(false);
-  };
+  }, []);
   
   // This will be called when the exit animation completes
-  const onAnimationComplete = () => {
-    // Add any cleanup code needed here
-  };
+  const onAnimationComplete = useCallback(() => {
+    // We don't need to do anything here since the exit 
+    // animation is handled by framer-motion
+    console.log("Animation completed");
+  }, []);
 
   return (
     <ContactContext.Provider

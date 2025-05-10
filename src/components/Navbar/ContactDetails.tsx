@@ -4,16 +4,16 @@ import StarBorder from "../UI/StarBorder";
 
 export default function ContactDetails({
   closeContact,
-  onAnimationComplete,
+  onAnimationComplete
 }: {
   closeContact: () => void;
-  onAnimationComplete?: () => void;
+  onAnimationComplete: () => void;
 }) {
   // Define animation variants
   const overlayVariants = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
-    exit: { opacity: 0, transition: { duration: 0.45, ease: "easeInOut" } }
+    animate: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
+    exit: { opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }
   };
 
   const panelVariants = {
@@ -23,8 +23,8 @@ export default function ContactDetails({
       x: 0, 
       transition: { 
         type: "tween", 
-        duration: 0.35, 
-        ease: "easeOut" 
+        duration: 0.3, 
+        ease: "easeInOut" 
       } 
     },
     exit: { 
@@ -32,7 +32,7 @@ export default function ContactDetails({
       x: "100%", 
       transition: { 
         type: "tween", 
-        duration: 0.45, 
+        duration: 0.3, 
         ease: "easeInOut" 
       } 
     }
@@ -46,6 +46,11 @@ export default function ContactDetails({
       animate="animate"
       exit="exit"
       onClick={closeContact}
+      onAnimationComplete={(definition) => {
+        if (definition === "exit") {
+          onAnimationComplete();
+        }
+      }}
     >
       <motion.div
         className="fixed top-0 right-0 h-screen bg-[#1a1a1a] md:w-[70vw] w-[98vw]"

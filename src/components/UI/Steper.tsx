@@ -83,12 +83,12 @@ import React, {
   
     return (
       <div
-        className="flex min-h-full flex-1 flex-col items-center justify-center p-4 sm:aspect-[4/3] md:aspect-[2/1]"
+        className="flex flex-col items-center justify-center flex-1 p-4 "
         {...rest}
       >
         <div
-          className={`mx-auto w-full max-w-md rounded-4xl shadow-xl ${stepCircleContainerClassName}`}
-          style={{ border: "1px solid #222" }}
+          className={`mx-auto w-full border-2 border-b-bgLight max-w-md rounded-4xl overflow-hidden ${stepCircleContainerClassName}`}
+       
         >
           <div
             className={`${stepContainerClassName} flex w-full items-center p-8`}
@@ -148,7 +148,7 @@ import React, {
                     className={`duration-350 rounded px-2 py-1 transition ${
                       currentStep === 1
                         ? "pointer-events-none opacity-50 text-neutral-400"
-                        : "text-neutral-400 hover:text-neutral-700"
+                        : "text-neutral-400 hover:text-neutral-200"
                     }`}
                     {...backButtonProps}
                   >
@@ -157,7 +157,7 @@ import React, {
                 )}
                 <button
                   onClick={isLastStep ? handleComplete : handleNext}
-                  className="duration-350 flex items-center justify-center rounded-full bg-btnDark py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:bg-green-600 active:bg-green-700"
+                  className=" duration-350 flex items-center justify-center rounded-full bg-btnDark py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:opacity-80 active:opacity-80"
                   {...nextButtonProps}
                 >
                   {isLastStep ? "Complete" : nextButtonText}

@@ -98,7 +98,7 @@ h6 {
 }
 .highlight,
 .highlight * {
-  @apply text-textHighlight;
+  color: var(--color-textHighlight) !important;
 }
 /* a:hover {
   @apply text-textHighlight;

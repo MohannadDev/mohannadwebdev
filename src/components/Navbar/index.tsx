@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavMenu } from "./menu";
 import Link from "next/link";
@@ -21,19 +21,19 @@ export default function Navbar() {
     { name: "Contact", path: "/contact", variant: "from-cursor" },
   ];
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     setIsMenuOpen(prev => !prev);
-  };
+  }, []);
   
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
-  };
+  }, []);
 
   // Define menu animation variants
   const menuOverlayVariants = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
-    exit: { opacity: 0, transition: { duration: 0.45, ease: "easeInOut" } }
+    animate: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
+    exit: { opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }
   };
   
   return (
@@ -74,7 +74,8 @@ export default function Navbar() {
             <div className="hidden md:block">
               <motion.button
                 onClick={toggleContact}
-                className="py-2 transition-colors rounded-sm x-4 x text-bgDark custom-class bg-bgLight"
+                className="px-4 py-2 text-white transition-colors border border-white rounded-md"
+                whileTap={{ scale: 0.95 }}
               >
                 Let&apos;s Talk
               </motion.button>
@@ -115,7 +116,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {isMenuOpen && (
           <motion.div
             key="mobile-menu-overlay"
