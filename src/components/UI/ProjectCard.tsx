@@ -33,11 +33,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               src={image}
               alt={title}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
               className="object-cover transition-transform duration-500 hover:scale-110"
               onError={() => setImageError(true)}
-              loading="lazy"
-              quality={80}
             />
           ) : (
             <div className="flex items-center justify-center w-full h-full text-white/50">

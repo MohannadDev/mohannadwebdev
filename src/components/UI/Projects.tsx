@@ -53,7 +53,7 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
   const displayedProjects = limit ? projectsData.slice(0, limit) : projectsData;
 
   return (
-    <section className="relative z-20 py-20 pb-24 text-white bg-black">
+    <section id="Projects" className="relative z-20 py-20 pb-24 text-white bg-black">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
       <div className="container relative z-10 px-4 mx-auto max-w-7xl">
@@ -73,25 +73,28 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {displayedProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-              viewport={{ once: true }}
-            >
-              <ProjectCard
-                title={project.title}
-                description={project.description}
-                technologies={project.technologies}
-                image={project.image}
-                projectUrl={project.projectUrl}
-                githubUrl={project.githubUrl}
-              />
-            </motion.div>
-          ))}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 md:max-w-3xl lg:max-w-none">
+            {displayedProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+                viewport={{ once: true }}
+                className="md:mx-auto md:w-full"
+              >
+                <ProjectCard
+                  title={project.title}
+                  description={project.description}
+                  technologies={project.technologies}
+                  image={project.image}
+                  projectUrl={project.projectUrl}
+                  githubUrl={project.githubUrl}
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {showViewAll && (

@@ -33,16 +33,13 @@ const HoverText = ({
   const lastProcessedPositionRef = useRef<{x: number, y: number} | null>(null);
   const lastHoveredIndexRef = useRef<number | null>(null);
   const isAnimatingRef = useRef<boolean>(false);
-  const animationSequenceRef = useRef<number[]>([]);
 
   // Split text into letters on mount and initialize their colors
   useEffect(() => {
     const chars = text.split('');
     setLetters(chars);
     setLetterColors(new Array(chars.length).fill(baseColor));
-    // Pre-compute the animation sequence for this text
-    animationSequenceRef.current = getAnimationSequence(chars.length);
-  }, [text, baseColor, variant]);
+  }, [text, baseColor]);
 
   // Handle hover start with improved initial letter detection
   const handleMouseEnter = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -80,11 +77,10 @@ const HoverText = ({
       if (lastPos) {
         const dx = mouseX - lastPos.x;
         const dy = mouseY - lastPos.y;
-        // Fast distance approximation (avoid square root)
-        const distanceMoved = Math.abs(dx) + Math.abs(dy);
+        const distanceMoved = Math.sqrt(dx * dx + dy * dy);
         
-        // Only process if mouse moved more than 5 pixels (increased threshold)
-        if (distanceMoved < 5) {
+        // Only process if mouse moved more than 3 pixels (threshold)
+        if (distanceMoved < 3) {
           return;
         }
       }
@@ -124,7 +120,7 @@ const HoverText = ({
           isAnimatingRef.current = true;
           animateLetters();
         }
-      }, 10); // Increased debounce delay for better performance
+      }, 5); // Very small delay for responsiveness
     }
   };
 
@@ -144,31 +140,61 @@ const HoverText = ({
           return i;
         }
       }
+      
+      // If direct hit test fails, fall back to nearest calculation
+      return findNearestLetterIndex(e, letterElements);
     }
     
-    // Fall back to simplified nearest calculation
+    // Fall back to nearest calculation if elementFromPoint fails
     return findNearestLetterIndex(e, letterElements);
   };
   
-  // Optimized function to find the nearest letter
+  // Helper function to find the nearest letter by precise distance calculation
   const findNearestLetterIndex = (
     e: React.MouseEvent<HTMLSpanElement>, 
     letterElements: NodeListOf<Element>
   ): number => {
     const mouseX = e.clientX;
+    const mouseY = e.clientY;
     
-    // Simplified approach: find the letter whose horizontal center is closest to the mouse
-    // This works well for horizontal text and is much faster than full 2D distance calculation
+    // First check for direct hits (cursor inside letter bounds)
+    for (let i = 0; i < letterElements.length; i++) {
+      const rect = letterElements[i].getBoundingClientRect();
+      if (
+        mouseX >= rect.left && 
+        mouseX <= rect.right && 
+        mouseY >= rect.top && 
+        mouseY <= rect.bottom
+      ) {
+        return i; // Early return if cursor is directly over a letter
+      }
+    }
+    
+    // If no direct hit, find the closest letter with weighted distance
     let closestIndex = 0;
     let minDistance = Infinity;
     
+    // Compute weighted distances
     for (let i = 0; i < letterElements.length; i++) {
       const rect = letterElements[i].getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
-      const distance = Math.abs(mouseX - centerX);
+      const centerY = rect.top + rect.height / 2;
       
-      if (distance < minDistance) {
-        minDistance = distance;
+      // Calculate vector from center of letter to mouse
+      const dx = mouseX - centerX;
+      const dy = mouseY - centerY;
+      
+      // Weight horizontal position more in horizontal text (4x more than vertical)
+      // This makes horizontal selection more accurate for typical left-to-right text
+      const weightedDistance = Math.sqrt((dx * dx * 4) + (dy * dy));
+      
+      // Add slight bias toward letters that are more to the right of the cursor
+      // This helps with selection when mouse is between characters
+      const directionBias = dx > 0 ? 1 : 0;
+      const finalDistance = weightedDistance - (directionBias * 2);
+      
+      if (finalDistance < minDistance) {
+        minDistance = finalDistance;
         closestIndex = i;
       }
     }
@@ -211,90 +237,91 @@ const HoverText = ({
   const animateLetters = () => {
     if (letters.length === 0) return;
     
-    // Use pre-computed animation sequence
-    const sequence = animationSequenceRef.current;
+    // Get animation sequence based on variant
+    const sequence = getAnimationSequence();
     if (!sequence.length) return;
     
     let currentStep = 0;
     // Create a new array with all baseColors to start
-    const newColors = [...letterColors];
+    const newColors = new Array(letters.length).fill(baseColor);
+    setLetterColors(newColors);
     
     // Start animation interval
     intervalRef.current = setInterval(() => {
       if (currentStep >= sequence.length) {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        isAnimatingRef.current = false;
         setAnimationComplete(true);
+        isAnimatingRef.current = false; // Reset the animation flag
         return;
       }
       
-      const letterIndex = sequence[currentStep];
-      if (letterIndex >= 0 && letterIndex < letters.length) {
-        // Update only the color that changes
-        newColors[letterIndex] = hoverColor;
-        setLetterColors([...newColors]);
-      }
+      // Update the color of the current index in the sequence
+      const indexToColor = sequence[currentStep];
+      
+      setLetterColors(prevColors => {
+        const newColors = [...prevColors];
+        newColors[indexToColor] = hoverColor;
+        return newColors;
+      });
       
       currentStep++;
-    }, 16); // ~60fps timing
+    }, duration * 100);
   };
-
-  // Pre-compute animation sequence based on variant (memoized)
-  const getAnimationSequence = (length: number): number[] => {
-    if (length === 0) return [];
-    
-    let sequence: number[] = [];
+  
+  // Get the sequence of indices to animate based on the variant
+  const getAnimationSequence = (): number[] => {
+    const totalLetters = letters.length;
     
     switch (variant) {
       case "left-to-right":
-        sequence = Array.from({ length }, (_, i) => i);
-        break;
+        return Array.from({ length: totalLetters }, (_, i) => i);
         
       case "center-outward": {
-        const center = Math.floor(length / 2);
-        for (let offset = 0; offset <= center; offset++) {
-          // Add letters outward from center (left then right)
-          if (center - offset >= 0) sequence.push(center - offset);
-          if (offset > 0 && center + offset < length) sequence.push(center + offset);
+        const center = Math.floor(totalLetters / 2);
+        const sequence = [center];
+        
+        // Add indices by distance from center
+        for (let dist = 1; dist < totalLetters; dist++) {
+          const left = center - dist;
+          const right = center + dist;
+          
+          if (left >= 0) sequence.push(left);
+          if (right < totalLetters) sequence.push(right);
         }
-        break;
+        
+        return sequence;
+      }
+      
+      case "from-cursor": {
+        const center = hoveredLetterIndex ?? 0;
+        const sequence = [center];
+        
+        // Add indices by distance from hover point
+        for (let dist = 1; dist < totalLetters; dist++) {
+          const left = center - dist;
+          const right = center + dist;
+          
+          if (left >= 0) sequence.push(left);
+          if (right < totalLetters) sequence.push(right);
+        }
+        
+        return sequence;
       }
         
       case "random": {
-        // Generate indices and shuffle them
-        sequence = Array.from({ length }, (_, i) => i);
-        for (let i = sequence.length - 1; i > 0; i--) {
+        // Create array of indices and shuffle it
+        const indices = Array.from({ length: totalLetters }, (_, i) => i);
+        // Fisher-Yates shuffle
+        for (let i = indices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+          [indices[i], indices[j]] = [indices[j], indices[i]];
         }
-        break;
+        return indices;
       }
-        
-      case "from-cursor": {
-        if (hoveredLetterIndex === null) {
-          // Default to left-to-right if no hover position
-          sequence = Array.from({ length }, (_, i) => i);
-        } else {
-          // Start from hovered letter and go outward
-          sequence = [hoveredLetterIndex];
-          
-          for (let offset = 1; sequence.length < length; offset++) {
-            // Add letter to the right if possible
-            if (hoveredLetterIndex + offset < length) {
-              sequence.push(hoveredLetterIndex + offset);
-            }
-            
-            // Add letter to the left if possible
-            if (hoveredLetterIndex - offset >= 0) {
-              sequence.push(hoveredLetterIndex - offset);
-            }
-          }
-        }
-        break;
-      }
+      
+      default:
+        return [];
     }
-    
-    return sequence;
   };
 
   // Clean up on unmount
@@ -309,7 +336,6 @@ const HoverText = ({
       isAnimatingRef.current = false;
     };
   }, []);
-  
   return (
     <span 
       ref={containerRef}

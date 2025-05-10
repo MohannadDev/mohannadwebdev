@@ -26,6 +26,16 @@ export const metadata: Metadata = {
   creator: "Mohannad",
   publisher: "Mohannad",
   metadataBase: new URL("https://mohannadwebdev.vercel.app"),
+  icons: {
+    icon: [
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico" }
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+    ]
+  },
   openGraph: {
     type: "website",
     title: "Mohannad - Creative Full-Stack Developer & UI/UX Designer",
@@ -61,8 +71,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  themeColor: "#121212",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
 };
 
 const headingFont = Space_Grotesk({
