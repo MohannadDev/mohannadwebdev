@@ -8,7 +8,7 @@ import { ContactProvider } from "@/context/ContactContext";
 import ContactDetailsWrapper from "@/components/Navbar/ContactDetailsWrapper";
 
 export const metadata: Metadata = {
-  title: "My Portfolio",
+  title: "Mohannad - Creative Developer & Designer",
   description: "A showcase of my projects and skills",
 };
 

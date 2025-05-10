@@ -16,9 +16,10 @@ export default function Navbar() {
     variant: "left-to-right" | "center-outward" | "random" | "from-cursor";
   }> = [
     { name: "Home", path: "/", variant: "from-cursor" },
-    { name: "About", path: "/about", variant: "from-cursor" },
-    { name: "Projects", path: "/projects", variant: "from-cursor" },
-    { name: "Contact", path: "/contact", variant: "from-cursor" },
+    { name: "About", path: "/#About", variant: "from-cursor" },
+    { name: "Projects", path: "/#Projects", variant: "from-cursor" },
+    { name: "Skills", path: "/#Skills", variant: "from-cursor" },
+    { name: "How It Works", path: "/#HowItWorks", variant: "from-cursor" },
   ];
 
   const toggleMenu = useCallback(() => {

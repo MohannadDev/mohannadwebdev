@@ -167,3 +167,26 @@ h6 {
 .animate-spin-reverse {
   animation: spin-reverse 15s linear infinite;
 }
+
+/* Background Beams Mobile Optimization */
+@media (max-width: 768px) {
+  svg[viewBox="0 0 696 316"] {
+    height: 100%;
+    width: auto !important;
+    max-width: none;
+    min-width: 100%;
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 480px) {
+  svg[viewBox="0 0 696 316"] {
+    transform: scale(1.5);
+  }
+}
+
+/* Skill icons shadow glow effect */
+.hover\:shadow-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s ease;
+}

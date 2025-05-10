@@ -7,41 +7,12 @@ import StarBorder from "@/components/UI/StarBorder";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ScrollFloat from "@/components/UI/ScrollFloat";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ContactContext } from "@/context/ContactContext";
 import { Step } from "@/components/UI/Steper";
-
-
-// Create a client-only wrapper component to isolate hydration
-const ClientOnly = ({ children }: { children: React.ReactNode }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return mounted ? <>{children}</> : null;
-};
-
-const DynamicThreads = dynamic(() => import("@/components/UI/Threads"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[300px] flex items-center justify-center bg-bgDark">
-      <motion.div
-        className="flex flex-col items-center gap-3"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      >
-        <div className="relative w-16 h-16">
-          <div className="absolute top-0 w-full h-full border-4 rounded-full border-t-white border-l-transparent border-r-transparent border-b-transparent animate-spin"></div>
-          <div className="absolute top-0 w-full h-full border-4 rounded-full border-t-transparent border-l-transparent border-r-white border-b-transparent animate-spin animation-delay-500"></div>
-        </div>
-        <span className="text-sm text-white/75">Loading visual experience</span>
-      </motion.div>
-    </div>
-  ),
-});
+import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
+import Projects from "@/components/UI/Projects";
+import { SkillsFlow } from "@/components/UI/SkillsFlow";
 
 const DynamicStepper = dynamic(() => import("@/components/UI/Steper"), {
   loading: () => (
@@ -100,8 +71,12 @@ export default function Home() {
   };
   return (
     <>
-      <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white">
-        <div className="flex justify-center flex-col px-4 mx-auto md:max-w-[90vw] mt-10 md:mt-16">
+      <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white relative overflow-hidden">
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <BackgroundBeams />
+        </div>
+
+        <div className="flex justify-center flex-col px-4 mx-auto md:max-w-[90vw] mt-10 md:mt-16 relative z-10">
           <SplitText
             text="Hi, I'm Mohannad."
             className="text-3xl md:text-6xl highlight"
@@ -142,9 +117,9 @@ export default function Home() {
             >
               Let&apos;s Talk
             </StarBorder>
-            <Link href="/projects">
+            <Link href="#projects">
               <motion.button
-                className="custom-class px-4 py-[16px] rounded-[20px] bg-transparent 
+                className="custom-class px-4 py-[16px] rounded-[20px] bg-transparent underline
                       text-shadow-white 
                       hover:text-white
                       transition-colors duration-600 "
@@ -157,41 +132,51 @@ export default function Home() {
             </Link>
           </motion.div>
         </div>
-
-        <div className="w-full h-[300px]  relative m-0 p-0">
-          <ClientOnly>
-            <div className="hidden md:block">
-              <DynamicThreads
-                amplitude={0.6}
-                distance={0}
-                enableMouseInteraction={true}
-                width={"100vw"}
-                height={"70vh"}
-              />
-            </div>
-            <div className="md:hidden">
-              {" "}
-              <DynamicThreads
-                amplitude={0.6}
-                distance={0}
-                enableMouseInteraction={true}
-                width={"100vw"}
-                height={"40vh"}
-              />
-            </div>
-          </ClientOnly>
-        </div>
       </section>
+      {/* Skills Section */}
+      {/* <section
+        id="Skills"
+        className="relative py-20 overflow-hidden text-white bg-gradient-to-b from-black to-bgDark"
+      >
+        <div className="container px-4 mx-auto">
+          <motion.div
+            className="mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+              My <span className="highlight">Tech Stack</span>
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-gray-400">
+              Technologies and tools I use to bring your products to life
+            </p>
+          </motion.div>
 
+          <motion.div
+            className="w-full max-w-4xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <SkillsFlow />
+          </motion.div>
+        </div>
+      </section> */}
       {/* About Me Section */}
-      <section className="relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden">
+      <section
+        id="About"
+        className="relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden"
+      >
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
-        
+
         <div className="container relative z-10 px-4 mx-auto max-w-7xl md:px-8">
           <div className="flex flex-col items-center gap-10 md:flex-row">
             <div className="flex-1 space-y-8">
-              <motion.h2 
-                className="text-4xl font-bold md:text-6xl" 
+              <motion.h2
+                className="text-4xl font-bold md:text-6xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -200,7 +185,7 @@ export default function Home() {
                 <span className="block">I&apos;m a web</span>
                 <span className="highlight">developer & designer</span>
               </motion.h2>
-              
+
               <motion.div
                 className="space-y-6 text-lg md:text-xl"
                 initial={{ opacity: 0, y: 30 }}
@@ -209,16 +194,24 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <p>
-                  Based in Egypt, <span className="highlight"> the land of the Pharaohs </span> , I am a skilled web developer and designer specializing in <span className="highlight">Frontend Engineering</span>.
+                  Based in Egypt,{" "}
+                  <span className="highlight"> the land of the Pharaohs </span>{" "}
+                  , I am a skilled web developer and designer specializing in{" "}
+                  <span className="highlight">Frontend Engineering</span>.
                 </p>
                 <p>
-                  I create high-quality web experiences through <span className="highlight">clean code</span> and <span className="highlight">thoughtful design</span>.
+                  I create high-quality web experiences through{" "}
+                  <span className="highlight">clean code</span> and{" "}
+                  <span className="highlight">thoughtful design</span>.
                 </p>
                 <p>
-                  Let&apos;s collaborate to <span className="highlight">elevate your online presence!</span>
+                  Let&apos;s collaborate to{" "}
+                  <span className="highlight">
+                    elevate your online presence!
+                  </span>
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -231,15 +224,15 @@ export default function Home() {
                   speed="5s"
                   onClick={toggleContact}
                   style={{
-                    transform: 'scale(1.01)',
+                    transform: "scale(1.01)",
                   }}
                 >
                   Let&apos;s Talk
                 </StarBorder>
               </motion.div>
             </div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex items-center justify-center flex-1"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -248,20 +241,22 @@ export default function Home() {
             >
               <div className="relative w-full max-w-md p-4 aspect-square">
                 <div className="absolute inset-0 bg-black/10 rounded-xl"></div>
-                
+
                 <div className="absolute inset-2 border-[6px] border-white/10 rounded-lg z-10"></div>
-                
-                <div 
+
+                <div
                   className="relative z-0 w-full h-full overflow-hidden rounded-lg shadow-xl"
                   style={{
-                    background: "linear-gradient(135deg, #8B5A2B 0%, #A67C52 100%)",
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)"
+                    background:
+                      "linear-gradient(135deg, #8B5A2B 0%, #A67C52 100%)",
+                    boxShadow:
+                      "0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
                   }}
                 >
-                  <div 
-                    className="absolute inset-0" 
+                  <div
+                    className="absolute inset-0"
                     style={{
-                     backgroundColor: "black"
+                      backgroundColor: "black",
                     }}
                   ></div>
                   <div className="absolute inset-0 flex items-center justify-center text-xl font-medium tracking-wide text-white/30">
@@ -273,7 +268,41 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="relative py-6 overflow-hidden text-white bg-black">
+        <div className="container px-4 mx-auto">
+          <motion.div
+            className="mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+              My <span className="highlight">Tech Stack</span>
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-gray-400">
+              Technologies and tools I use to bring Ideas to life
+            </p>
+          </motion.div>
 
+          <motion.div
+            className="w-full max-w-4xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <div  id="Skills">
+            <SkillsFlow />
+
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      
+      {/* Projects Section - Now using the reusable Projects component */}
+      <Projects limit={3} showViewAll={true} />
+      
       <section
         id="HowItWorks"
         className="flex justify-center pb-8 text-white md:pb-16 bg-bgDark "
@@ -365,7 +394,6 @@ export default function Home() {
           </DynamicStepper>
         </div>
       </section>
- 
     </>
   );
 }

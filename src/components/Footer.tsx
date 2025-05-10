@@ -42,13 +42,8 @@ export default function Footer() {
         >
           Let&apos;s Talk
         </StarBorder>
-        <HoverText
-          text="Don't like flashy buttons? Reach out at mohannadwebdev@gmail.com"
-          variant="from-cursor"
-          baseColor="var(--color-textMuted)"
-          hoverColor="var(--color-textHighlight)"
-          className="my-4 text-lg z-100"
-        />
+        <p  className="my-4 text-lg z-100 ">Don&apos;t like flashy buttons? Reach out at MohannadWebDev@gmail.com</p>
+   
         <div className="flex items-center justify-center gap-4 z-100">
           <a
             href="https://github.com/MohannadDev"
