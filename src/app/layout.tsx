@@ -8,7 +8,7 @@ import { ContactProvider } from "@/context/ContactContext";
 import ContactDetailsWrapper from "@/components/Navbar/ContactDetailsWrapper";
 
 export const metadata: Metadata = {
-  title: "Mohannad - Creative Full-Stack Developer & UI/UX Designer",
+  title: "Mohannad - Creative Front End Developer",
   description:
     "Portfolio showcasing innovative web development projects, modern designs, and expertise in Next.js, React, and TypeScript. View my latest work and get in touch for collaborations.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: "Mohannad - Creative Full-Stack Developer & UI/UX Designer",
+    title: "Mohannad - Creative Front End Developer",
     description:
       "Portfolio showcasing innovative web development projects, modern designs, and expertise in Next.js, React, and TypeScript.",
     url: "https://mohannadwebdev.vercel.app/",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohannad - Creative Full-Stack Developer & UI/UX Designer",
+    title: "Mohannad - Creative Front End Developer",
     description:
       "Portfolio showcasing innovative web development projects and modern designs",
     images: ["/images/portfolio-preview.jpg"],

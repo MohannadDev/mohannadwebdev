@@ -19,7 +19,7 @@ export const projectsData: ProjectData[] = [
     id: 1,
     title: "E-Commerce App",
     description: "A modern, full-featured e-commerce storefront built with Next.js, TypeScript, Tailwind CSS, and Shopify. Ideal for forward-thinking businesses seeking a scalable, performant, and customizable online shopping experience.",
-    technologies: ["Next.js", "React", "TailwindCSS", "Framer Motion", "GraphQL", "shopify"],
+    technologies: ["Next.js", "TypeScript","React", "TailwindCSS", "Framer Motion", "GraphQL", "shopify"],
     image: "/images/protoShop.png",
     projectUrl: "https://protoshop-dev.vercel.app/",
     githubUrl: "https://github.com/MohannadDev/protoshop-dev",
