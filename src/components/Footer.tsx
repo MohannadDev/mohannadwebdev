@@ -35,6 +35,7 @@ export default function Footer() {
           btnClassName="hover:opacity-80 transition-colors duration-600 text-white font-bold text-2xl py-6 px-12 bg-black"
           speed="5s"
           href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
+          aria-label="Send me an email to discuss your project"
           style={{
             transform: "scale(1.3)",
             backgroundColor:"black"
@@ -49,7 +50,8 @@ export default function Footer() {
             href="https://github.com/MohannadDev"
             target="_blank"
             rel="noopener noreferrer"
-            className="block transition-colors duration-300 hover:text-white "
+            className="block transition-colors duration-300 hover:text-white"
+            aria-label="View my GitHub profile"
           >
             <HoverText
               text="GITHUB"
@@ -63,6 +65,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className="block transition-colors duration-300 hover:text-white"
+            aria-label="Connect with me on LinkedIn"
           >
             <HoverText
               text="LINKEDIN"
@@ -75,6 +78,7 @@ export default function Footer() {
           <a
             href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
             className="block transition-colors duration-300 hover:text-white"
+            aria-label="Send me an email"
           >
             <HoverText
               text="EMAIL"

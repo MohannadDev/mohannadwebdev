@@ -67,6 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             className="px-4 py-2 text-sm font-medium transition-colors rounded-lg highlight bg-white/10 hover:bg-white/20"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            aria-label={`View ${title} project demo`}
           >
             View Project
           </motion.a>
@@ -78,6 +79,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             className="px-4 py-2 text-sm font-medium transition-colors border rounded-lg text-white/80 border-white/20 hover:bg-white/10"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            aria-label={`View ${title} GitHub repository`}
           >
             GitHub Repo
           </motion.a>

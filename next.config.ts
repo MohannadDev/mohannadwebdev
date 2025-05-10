@@ -13,8 +13,8 @@ const nextConfig: NextConfig = {
     // Enables better tree-shaking for reduced bundle size
     optimizeCss: true,
   },
-  // Improve asset loading
-  assetPrefix: process.env.NODE_ENV === 'production' ? '.' : '',
+  // Improve asset loading - fixed to include leading slash
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
 };
 
 export default nextConfig;
