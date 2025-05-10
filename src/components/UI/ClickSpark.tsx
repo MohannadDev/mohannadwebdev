@@ -27,7 +27,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   duration = 400,
   easing = "ease-out",
   extraScale = 1.0,
-    children
+  children
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -71,19 +71,19 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   }, []);
 
   const easeFunc = useCallback(
-      (t: number) => {
-        switch (easing) {
-          case "linear":
-            return t;
-          case "ease-in":
-            return t * t;
-          case "ease-in-out":
-            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-          default:
-            return t * (2 - t);
-        }
-      },
-      [easing]
+    (t: number) => {
+      switch (easing) {
+        case "linear":
+          return t;
+        case "ease-in":
+          return t * t;
+        case "ease-in-out":
+          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        default:
+          return t * (2 - t);
+      }
+    },
+    [easing]
   );
 
   useEffect(() => {
@@ -143,25 +143,25 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   // Global click handler for the entire document
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-    const canvas = canvasRef.current;
+      const canvas = canvasRef.current;
       const container = containerRef.current;
       if (!canvas || !container) return;
       
       // Check if the click was inside our container
       if (container.contains(e.target as Node)) {
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-    const now = performance.now();
-    const newSparks: Spark[] = Array.from({length: sparkCount}, (_, i) => ({
-      x,
-      y,
-      angle: (2 * Math.PI * i) / sparkCount,
-      startTime: now,
-    }));
+        const now = performance.now();
+        const newSparks: Spark[] = Array.from({length: sparkCount}, (_, i) => ({
+          x,
+          y,
+          angle: (2 * Math.PI * i) / sparkCount,
+          startTime: now,
+        }));
 
-    sparksRef.current.push(...newSparks);
+        sparksRef.current.push(...newSparks);
       }
     };
 
@@ -173,20 +173,20 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     };
   }, [sparkCount]);
 
-    return (
-        <div
+  return (
+    <div 
       ref={containerRef}
       className="relative w-full h-full"
       style={{ zIndex: 1 }}
-        >
-            <canvas
-                ref={canvasRef}
-                className="absolute inset-0 pointer-events-none"
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 1000 }} // Ensure canvas is above all content
-            />
-            {children}
-        </div>
-    );
+      />
+      {children}
+    </div>
+  );
 };
 
 export default ClickSpark;

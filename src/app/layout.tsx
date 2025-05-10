@@ -8,7 +8,7 @@ import { ContactProvider } from "@/context/ContactContext";
 import ContactDetailsWrapper from "@/components/Navbar/ContactDetailsWrapper";
 
 export const metadata: Metadata = {
-  title: "Mohannad - Creative Front End Developer",
+  title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
   description:
     "Portfolio showcasing innovative web development projects, modern designs, and expertise in Next.js, React, and TypeScript. View my latest work and get in touch for collaborations.",
   keywords: [
@@ -26,19 +26,9 @@ export const metadata: Metadata = {
   creator: "Mohannad",
   publisher: "Mohannad",
   metadataBase: new URL("https://mohannadwebdev.vercel.app"),
-  icons: {
-    icon: [
-      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.ico" }
-    ],
-    apple: [
-      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
-    ]
-  },
   openGraph: {
     type: "website",
-    title: "Mohannad - Creative Front End Developer",
+    title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
     description:
       "Portfolio showcasing innovative web development projects, modern designs, and expertise in Next.js, React, and TypeScript.",
     url: "https://mohannadwebdev.vercel.app/",
@@ -54,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohannad - Creative Front End Developer",
+    title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
     description:
       "Portfolio showcasing innovative web development projects and modern designs",
     images: ["/images/portfolio-preview.jpg"],
@@ -71,11 +61,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121212",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
 };
 
 const headingFont = Space_Grotesk({

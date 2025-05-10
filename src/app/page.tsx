@@ -7,30 +7,38 @@ import StarBorder from "@/components/UI/StarBorder";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ScrollFloat from "@/components/UI/ScrollFloat";
-import { useContext, Suspense } from "react";
+import { useContext } from "react";
 import { ContactContext } from "@/context/ContactContext";
 import { Step } from "@/components/UI/Steper";
-import Spinner from "@/components/UI/Spinner";
-
-// Dynamically import heavy components
-const BackgroundBeams = dynamic(() => import("@/components/UI/BackgroundBeams").then(mod => mod.BackgroundBeams), {
-  loading: () => <Spinner />,
-  ssr: false
-});
-
-const Projects = dynamic(() => import("@/components/UI/Projects"), {
-  loading: () => <Spinner />,
-  ssr: false
-});
-
-const SkillsFlow = dynamic(() => import("@/components/UI/SkillsFlow").then(mod => mod.SkillsFlow), {
-  loading: () => <Spinner />,
-  ssr: false
-});
+import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
+import Projects from "@/components/UI/Projects";
+import { SkillsFlow } from "@/components/UI/SkillsFlow";
 
 const DynamicStepper = dynamic(() => import("@/components/UI/Steper"), {
-  loading: () => <Spinner />,
-  ssr: false
+  loading: () => (
+    <div className="flex items-center justify-center w-full py-8">
+      <motion.div
+        className="flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="w-40 h-1 overflow-hidden rounded bg-white/10">
+          <motion.div
+            className="h-full bg-white/40"
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  ),
 });
 
 export default function Home() {
@@ -65,9 +73,7 @@ export default function Home() {
     <>
       <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white relative overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <Suspense fallback={<Spinner />}>
-            <BackgroundBeams />
-          </Suspense>
+          <BackgroundBeams />
         </div>
 
         <div className="flex justify-center flex-col px-4 mx-auto md:max-w-[90vw] mt-10 md:mt-16 relative z-10">
@@ -254,19 +260,16 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div id="Skills">
-              <Suspense fallback={<Spinner />}>
-                <SkillsFlow />
-              </Suspense>
+            <div  id="Skills">
+            <SkillsFlow />
+
             </div>
           </motion.div>
         </div>
       </section>
       
       {/* Projects Section  */}
-      <Suspense fallback={<Spinner />}>
-        <Projects limit={3} showViewAll={true} />
-      </Suspense>
+      <Projects limit={3} showViewAll={true} />
       
       <section
         id="HowItWorks"
@@ -283,82 +286,79 @@ export default function Home() {
           >
             How It Works!
           </ScrollFloat>
-          <Suspense fallback={<Spinner />}>
-            <DynamicStepper
-              initialStep={1}
-              onStepChange={() => {
-                // No operation needed
-              }}
-              onFinalStepCompleted={() => {}} 
-              backButtonText="Previous"
-              nextButtonText="Next"
-              stepCircleContainerClassName="bg-bgDark border-neutral-700"
-              stepContainerClassName="bg-bgDark"
-              contentClassName="bg-bgDark"
-              footerClassName="bg-bgDark"
-            >
-              <Step>
-                <h2 className="stepHeading">1. Discovery</h2>
-                <p>
-                  I begin by understanding your project goals, audience, and
-                  requirements. This ensures the foundation of the project is
-                  strong and aligned with your vision.
-                </p>
-              </Step>
-              <Step>
-                <h2 className="mb-2 text-xl font-bold">
-                  2. Wireframing & Prototyping
-                </h2>
-                <p>
-                  Before any code is written, I design the layout using tools like
-                  Figma to visualize the structure and user flow, allowing for
-                  feedback and early adjustments.
-                </p>
-              </Step>
-              <Step>
-                <h2 className="mb-2 text-xl font-bold">
-                  3. UI Design Integration
-                </h2>
-                <p>
-                  I excel in utilizing advanced front-end techniques to create
-                  responsive, user-friendly interfaces. For projects that demand
-                  extensive research and branding, collaborating with a UI/UX
-                  designer<b> can enhance the results. </b> However,{" "}
-                  <b>I&apos;m fully equipped to deliver exceptional designs</b>{" "}
-                  that perform flawlessly across all devices on my own.
-                </p>
-              </Step>
-              <Step>
-                <h2 className="mb-2 text-xl font-bold">
-                  4. Modular & Scalable Code
-                </h2>
-                <p>
-                  I develop using modern technologies like React and Tailwind CSS,
-                  focusing on reusable components, scalability, and
-                  maintainability.
-                </p>
-              </Step>
-              <Step>
-                <h2 className="mb-2 text-xl font-bold">
-                  5. Cross-Browser Testing
-                </h2>
-                <p>
-                  Every project is tested across multiple devices and browsers to
-                  ensure it works smoothly for all users, regardless of how they
-                  access it.
-                </p>
-              </Step>
-              <Step>
-                <h2 className="mb-2 text-xl font-bold">
-                  6. Deployment & Handover
-                </h2>
-                <p>
-                  I deploy the site to fast, secure platforms like Vercel and
-                  provide helpful documentation or support for future updates.
-                </p>
-              </Step>
-            </DynamicStepper>
-          </Suspense>
+          <DynamicStepper
+            initialStep={1}
+            onStepChange={() => {
+            }}
+            onFinalStepCompleted={() => null}
+            backButtonText="Previous"
+            nextButtonText="Next"
+            stepCircleContainerClassName="bg-bgDark border-neutral-700"
+            stepContainerClassName="bg-bgDark"
+            contentClassName="bg-bgDark"
+            footerClassName="bg-bgDark"
+          >
+            <Step>
+              <h2 className="stepHeading">1. Discovery</h2>
+              <p>
+                I begin by understanding your project goals, audience, and
+                requirements. This ensures the foundation of the project is
+                strong and aligned with your vision.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                2. Wireframing & Prototyping
+              </h2>
+              <p>
+                Before any code is written, I design the layout using tools like
+                Figma to visualize the structure and user flow, allowing for
+                feedback and early adjustments.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                3. UI Design Integration
+              </h2>
+              <p>
+                3. I excel in utilizing advanced front-end techniques to create
+                responsive, user-friendly interfaces. For projects that demand
+                extensive research and branding, collaborating with a UI/UX
+                designer<b> can enhance the results. </b> However,{" "}
+                <b>I&apos;m fully equipped to deliver exceptional designs</b>{" "}
+                that perform flawlessly across all devices on my own.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                4. Modular & Scalable Code
+              </h2>
+              <p>
+                I develop using modern technologies like React and Tailwind CSS,
+                focusing on reusable components, scalability, and
+                maintainability.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                5. Cross-Browser Testing
+              </h2>
+              <p>
+                Every project is tested across multiple devices and browsers to
+                ensure it works smoothly for all users, regardless of how they
+                access it.
+              </p>
+            </Step>
+            <Step>
+              <h2 className="mb-2 text-xl font-bold">
+                6. Deployment & Handover
+              </h2>
+              <p>
+                I deploy the site to fast, secure platforms like Vercel and
+                provide helpful documentation or support for future updates.
+              </p>
+            </Step>
+          </DynamicStepper>
         </div>
       </section>
     </>

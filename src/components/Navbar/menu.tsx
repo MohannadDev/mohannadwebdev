@@ -27,6 +27,7 @@ export const NavItem = ({
         href={path}
         onClick={onClick}
         className="block px-3 py-2 font-medium rounded-md text-text-dark dark:text-text-white hover:text-primary dark:hover:text-primary"
+        aria-label={`Navigate to ${name} section`}
       >
         <HoverText
           text={name}
@@ -86,6 +87,7 @@ export const NavMenu = ({
           <motion.button
             className="p-2 rounded-lg focus:outline-none bg-bgDark"
             whileTap={{ scale: 0.95 }}
+            aria-label="Close navigation menu"
           >
             <svg
               className="w-6 h-6"
@@ -93,6 +95,7 @@ export const NavMenu = ({
               viewBox="0 0 24 24"
               stroke="currentColor"
               style={{ color: "var(--color-textHighlight)" }}
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"

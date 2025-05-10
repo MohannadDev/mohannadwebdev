@@ -28,9 +28,7 @@ export const ContactProvider = ({ children }: { children: ReactNode }) => {
   }, []);
   
   const onAnimationComplete = useCallback(() => {
-    // We don't need to do anything here since the exit 
-    // animation is handled by framer-motion
-    console.log("Animation completed");
+
   }, []);
 
   return (
