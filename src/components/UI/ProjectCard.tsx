@@ -31,12 +31,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {!imageError ? (
             <Image
               src={image}
-              alt={`Project preview for ${title}`}
+              alt={title}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
               className="object-cover transition-transform duration-500 hover:scale-110"
               onError={() => setImageError(true)}
-              loading="lazy"
             />
           ) : (
             <div className="flex items-center justify-center w-full h-full text-white/50">
@@ -68,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             className="px-4 py-2 text-sm font-medium transition-colors rounded-lg highlight bg-white/10 hover:bg-white/20"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            aria-label={`View live demo of ${title}`}
+            aria-label={`View ${title} project demo`}
           >
             View Project
           </motion.a>
@@ -80,7 +79,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             className="px-4 py-2 text-sm font-medium transition-colors border rounded-lg text-white/80 border-white/20 hover:bg-white/10"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            aria-label={`View source code for ${title} on GitHub`}
+            aria-label={`View ${title} GitHub repository`}
           >
             GitHub Repo
           </motion.a>

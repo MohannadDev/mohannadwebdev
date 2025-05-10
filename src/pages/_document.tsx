@@ -4,8 +4,14 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Preconnect to important domains for faster resource loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Favicon configuration */}
+        <link rel="icon" href="/icons/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/icons/favicon-16x16.png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         
         {/* SPA routing - no server */}
         <meta name="application-name" content="Mohannad - Portfolio" />
@@ -21,4 +27,4 @@ export default function Document() {
       </body>
     </Html>
   );
-} 
+}
