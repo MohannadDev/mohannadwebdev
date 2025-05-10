@@ -86,7 +86,6 @@ export const NavMenu = ({
           <motion.button
             className="p-2 rounded-lg focus:outline-none bg-bgDark"
             whileTap={{ scale: 0.95 }}
-            aria-label="Close navigation menu"
           >
             <svg
               className="w-6 h-6"
@@ -94,7 +93,6 @@ export const NavMenu = ({
               viewBox="0 0 24 24"
               stroke="currentColor"
               style={{ color: "var(--color-textHighlight)" }}
-              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"

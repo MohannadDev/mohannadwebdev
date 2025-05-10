@@ -111,6 +111,9 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="https://github.com/MohannadDev"
+                aria-label="View all projects on GitHub"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 View All Projects
               </motion.a>

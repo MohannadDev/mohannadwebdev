@@ -47,7 +47,7 @@ export default function Navbar() {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <motion.div>
-              <Link href="/" className="flex items-center" aria-label="Go to homepage">
+              <Link href="/" className="flex items-center">
                 <svg
                   className="w-9 h-9"
                   fill="none"
@@ -59,7 +59,6 @@ export default function Navbar() {
                   viewBox="0 0 24 24"
                   width="24"
                   xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
                 >
                   <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"></path>
                 </svg>
@@ -75,7 +74,6 @@ export default function Navbar() {
                 onClick={toggleContact}
                 className="px-4 py-2 text-white transition-colors rounded-md hover:opacity-90 bg-btnLight"
                 whileTap={{ scale: 0.95 }}
-                aria-label="Contact Me"
               >
                 Let&apos;s Talk
               </motion.button>
@@ -87,16 +85,12 @@ export default function Navbar() {
                   <button
                     onClick={toggleContact}
                     className="px-3 py-1 mx-3 text-sm text-white rounded-md bg-btnLight hover:opacity-90"
-                    aria-label="Contact Me"
                   >
                     Let&apos;s talk
                   </button>
                   <button
                     onClick={toggleMenu}
                     className="p-2 text-white rounded-md focus:outline-none"
-                    aria-label="Open navigation menu"
-                    aria-expanded={isMenuOpen}
-                    aria-controls="mobile-menu"
                   >
                     <svg
                       className="w-6 h-6"
@@ -104,7 +98,6 @@ export default function Navbar() {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -131,16 +124,11 @@ export default function Navbar() {
             animate="animate"
             exit="exit"
             onClick={closeMenu}
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
           >
             <div className="flex items-center justify-center h-full">
               <button
                 onClick={closeMenu}
                 className="absolute text-white top-5 right-5"
-                aria-label="Close navigation menu"
               >
                 <svg
                   className="w-8 h-8"
@@ -148,7 +136,6 @@ export default function Navbar() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"

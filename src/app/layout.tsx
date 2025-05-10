@@ -74,7 +74,8 @@ export const viewport: Viewport = {
   themeColor: "#121212",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 const headingFont = Space_Grotesk({

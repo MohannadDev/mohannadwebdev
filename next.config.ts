@@ -3,7 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   images: {
-    unoptimized: true
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: process.env.NODE_ENV === 'production'
   },
   // Optimize for single-page application
   trailingSlash: true, // Ensures consistent URLs
@@ -13,7 +19,7 @@ const nextConfig: NextConfig = {
     // Enables better tree-shaking for reduced bundle size
     optimizeCss: true,
   },
-  // Improve asset loading - fixed to include leading slash
+  // Improve asset loading - use / for production to ensure paths are correct
   assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
 };
 

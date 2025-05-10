@@ -150,7 +150,6 @@ import React, {
                         ? "pointer-events-none opacity-50 text-neutral-400"
                         : "text-neutral-400 hover:text-neutral-200"
                     }`}
-                    aria-label={`Go back to step ${currentStep - 1}`}
                     {...backButtonProps}
                   >
                     {backButtonText}
@@ -159,7 +158,6 @@ import React, {
                 <button
                   onClick={isLastStep ? handleComplete : handleNext}
                   className=" duration-350 flex items-center justify-center rounded-full bg-btnDark py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:opacity-80 active:opacity-80"
-                  aria-label={isLastStep ? "Complete all steps" : `Continue to step ${currentStep + 1}`}
                   {...nextButtonProps}
                 >
                   {isLastStep ? "Complete" : nextButtonText}
