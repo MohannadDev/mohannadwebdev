@@ -37,8 +37,13 @@ const StarBorder = <T extends React.ElementType = "button">({
           animationDuration: speed,
         }}
       ></div>
-      {/*  bg-gradient-to-b from-black to-btnDark border border-btnDark*/}
-      <div className={`relative z-1 bg-btnDark border-btnDark text-white text-center text-[16px] py-[16px] px-[26px] rounded-[20px] ${btnClassName}`}>
+      <div 
+        className={`relative z-1 bg-btnDark font-bold border-btnDark text-white text-center text-[16px] py-[16px] px-[26px] rounded-[20px] transition-all duration-300 ease-out shadow-lg hover:shadow-xl ${btnClassName}`}
+        style={{
+          transform: 'translateZ(0)',
+          willChange: 'transform, opacity, box-shadow', 
+        }}
+      >
         {children}
       </div>
     </Component>

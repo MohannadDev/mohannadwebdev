@@ -18,8 +18,9 @@
   --animate-shine: shine 5s linear infinite;
   --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
   --animate-star-movement-top: star-movement-top linear infinite alternate;
-  
-    @keyframes shine {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+
+  @keyframes shine {
     from {
       background-position: 0% 50%;
       opacity: 1;
@@ -32,7 +33,7 @@
   @keyframes star-movement-top {
     from {
       transform: translate(0%, 0%);
-      opacity: 1; 
+      opacity: 1;
     }
     to {
       transform: translate(100%, 0%);
@@ -51,6 +52,35 @@
   }
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+
+ 
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: --color-bgDark; */
@@ -70,10 +100,7 @@ body {
 body * {
   @apply transition duration-150 ease-in-out;
 }
-h1,
-h2,
-h3,
-h4,
+
 h5,
 h6,
 p,
@@ -81,6 +108,13 @@ span,
 a {
   color: var(--color-textMuted);
 }
+
+h1 p, h1 span,
+h2 p, h2 span,
+h3 p, h3 span {
+  color: inherit; /* Inherit color from parent heading instead of using text-muted */
+}
+
 body *::selection {
   color: var(--color-textHighlight);
 }
@@ -103,3 +137,33 @@ h6 {
 /* a:hover {
   @apply text-textHighlight;
 } */
+.stepHeading {
+  @apply mb-2 text-xl font-bold;
+  color: var(--color-textHighlight) !important;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 15s linear infinite;
+}

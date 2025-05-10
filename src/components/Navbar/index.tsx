@@ -22,9 +22,9 @@ export default function Navbar() {
   ];
 
   const toggleMenu = useCallback(() => {
-    setIsMenuOpen(prev => !prev);
+    setIsMenuOpen((prev) => !prev);
   }, []);
-  
+
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
   }, []);
@@ -33,9 +33,9 @@ export default function Navbar() {
   const menuOverlayVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
-    exit: { opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }
+    exit: { opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } },
   };
-  
+
   return (
     <>
       <motion.nav
@@ -60,9 +60,7 @@ export default function Navbar() {
                   width="24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
-                  ></path>
+                  <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"></path>
                 </svg>
               </Link>
             </motion.div>
@@ -74,7 +72,7 @@ export default function Navbar() {
             <div className="hidden md:block">
               <motion.button
                 onClick={toggleContact}
-                className="px-4 py-2 text-white transition-colors border border-white rounded-md"
+                className="px-4 py-2 text-white transition-colors rounded-md hover:opacity-90 bg-btnLight"
                 whileTap={{ scale: 0.95 }}
               >
                 Let&apos;s Talk
@@ -86,7 +84,7 @@ export default function Navbar() {
                 <>
                   <button
                     onClick={toggleContact}
-                    className="px-3 py-1 mx-3 text-sm text-white border border-white rounded-md hover:bg-white hover:text-black"
+                    className="px-3 py-1 mx-3 text-sm text-white rounded-md bg-btnLight hover:opacity-90"
                   >
                     Let&apos;s talk
                   </button>
@@ -147,9 +145,9 @@ export default function Navbar() {
                   ></path>
                 </svg>
               </button>
-              <NavMenu 
-                items={navItems} 
-                isMobile={true} 
+              <NavMenu
+                items={navItems}
+                isMobile={true}
                 onItemClick={closeMenu}
                 onClose={closeMenu}
               />

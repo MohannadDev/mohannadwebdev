@@ -34,6 +34,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} antialiased`}
+      
     >
       <body className="flex flex-col min-h-screen bg-bg-white dark:bg-bg-dark">
         <ContactProvider>
