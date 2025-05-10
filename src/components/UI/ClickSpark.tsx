@@ -17,7 +17,12 @@ interface Spark {
   y: number;
   angle: number;
   startTime: number;
+  cosAngle: number; // Pre-computed cos value
+  sinAngle: number; // Pre-computed sin value
 }
+
+// Pre-compute 2 * Math.PI to avoid repeated calculations
+const TWO_PI = 2 * Math.PI;
 
 const ClickSpark: React.FC<ClickSparkProps> = ({
   sparkColor = "#fff",
@@ -32,7 +37,8 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]); // Stores spark data
-  const startTimeRef = useRef<number | null>(null); // Tracks initial timestamp for animation
+  const isAnimatingRef = useRef<boolean>(false);
+  const lastClickTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,9 +57,10 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
       }
     };
 
+    // Less frequent resize handling
     const handleResize = () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(resizeCanvas, 100); // Debounce by 100ms
+      resizeTimeout = setTimeout(resizeCanvas, 200); // Increased debounce time
     };
 
     // Observe size changes
@@ -70,6 +77,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     };
   }, []);
 
+  // Memoized easing function to avoid recreation
   const easeFunc = useCallback(
     (t: number) => {
       switch (easing) {
@@ -86,6 +94,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     [easing]
   );
 
+  // Animation logic
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -95,10 +104,10 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     let animationId: number;
 
     const draw = (timestamp: number) => {
-      if (!startTimeRef.current) {
-        startTimeRef.current = timestamp; // store initial time
+      // Only clear canvas if there are sparks to draw
+      if (sparksRef.current.length > 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-      ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
       sparksRef.current = sparksRef.current.filter((spark: Spark) => {
         const elapsed = timestamp - spark.startTime;
@@ -113,11 +122,11 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
         const distance = eased * sparkRadius * extraScale;
         const lineLength = sparkSize * (1 - eased);
 
-        // Points for the spark line
-        const x1 = spark.x + distance * Math.cos(spark.angle);
-        const y1 = spark.y + distance * Math.sin(spark.angle);
-        const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
-        const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+        // Use pre-computed sin/cos values
+        const x1 = spark.x + distance * spark.cosAngle;
+        const y1 = spark.y + distance * spark.sinAngle;
+        const x2 = spark.x + (distance + lineLength) * spark.cosAngle;
+        const y2 = spark.y + (distance + lineLength) * spark.sinAngle;
 
         // Draw the spark line
         ctx.strokeStyle = sparkColor;
@@ -130,19 +139,43 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
         return true;
       });
 
-      animationId = requestAnimationFrame(draw);
+      // Only continue animation if we have sparks left
+      if (sparksRef.current.length > 0) {
+        animationId = requestAnimationFrame(draw);
+      } else {
+        isAnimatingRef.current = false;
+      }
     };
 
-    animationId = requestAnimationFrame(draw);
+    // Only start animation if not already running
+    const startAnimation = () => {
+      if (!isAnimatingRef.current && sparksRef.current.length > 0) {
+        isAnimatingRef.current = true;
+        animationId = requestAnimationFrame(draw);
+      }
+    };
+
+    // Set up an interval to check if we need to start animation
+    const checkInterval = setInterval(() => {
+      if (sparksRef.current.length > 0 && !isAnimatingRef.current) {
+        startAnimation();
+      }
+    }, 100);
 
     return () => {
       cancelAnimationFrame(animationId);
+      clearInterval(checkInterval);
     };
-  }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
+  }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale]);
 
-  // Global click handler for the entire document
+  // Optimized click handler
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
+      const now = performance.now();
+      // Debounce clicks - ignore if less than 100ms since last click
+      if (now - lastClickTimeRef.current < 100) return;
+      lastClickTimeRef.current = now;
+
       const canvas = canvasRef.current;
       const container = containerRef.current;
       if (!canvas || !container) return;
@@ -153,25 +186,82 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const now = performance.now();
-        const newSparks: Spark[] = Array.from({length: sparkCount}, (_, i) => ({
-          x,
-          y,
-          angle: (2 * Math.PI * i) / sparkCount,
-          startTime: now,
-        }));
+        // Create sparks with pre-computed sin/cos values
+        const newSparks: Spark[] = [];
+        for (let i = 0; i < sparkCount; i++) {
+          const angle = (TWO_PI * i) / sparkCount;
+          newSparks.push({
+            x,
+            y,
+            angle,
+            startTime: now,
+            cosAngle: Math.cos(angle),
+            sinAngle: Math.sin(angle)
+          });
+        }
 
         sparksRef.current.push(...newSparks);
+        
+        // Start animation if it's not already running
+        if (!isAnimatingRef.current && canvasRef.current) {
+          isAnimatingRef.current = true;
+          requestAnimationFrame(() => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Initial draw call to start animation
+            const draw = (ts: number) => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              
+              sparksRef.current = sparksRef.current.filter((spark: Spark) => {
+                const elapsed = ts - spark.startTime;
+                if (elapsed >= duration) return false;
+                
+                const progress = elapsed / duration;
+                const eased = easeFunc(progress);
+                
+                const distance = eased * sparkRadius * extraScale;
+                const lineLength = sparkSize * (1 - eased);
+                
+                const x1 = spark.x + distance * spark.cosAngle;
+                const y1 = spark.y + distance * spark.sinAngle;
+                const x2 = spark.x + (distance + lineLength) * spark.cosAngle;
+                const y2 = spark.y + (distance + lineLength) * spark.sinAngle;
+                
+                ctx.strokeStyle = sparkColor;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                
+                return true;
+              });
+              
+              if (sparksRef.current.length > 0) {
+                requestAnimationFrame(draw);
+              } else {
+                isAnimatingRef.current = false;
+              }
+            };
+            
+            requestAnimationFrame(draw);
+          });
+        }
       }
     };
 
-    // Attach the click handler to the document
-    document.addEventListener('click', handleGlobalClick);
+    // Use passive event listener for better performance
+    document.addEventListener('click', handleGlobalClick, { passive: true });
 
     return () => {
       document.removeEventListener('click', handleGlobalClick);
     };
-  }, [sparkCount]);
+  }, [sparkColor, sparkCount, sparkRadius, sparkSize, duration, easeFunc, extraScale]);
 
   return (
     <div 

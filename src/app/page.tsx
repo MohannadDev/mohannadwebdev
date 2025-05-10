@@ -1,20 +1,53 @@
 "use client";
 
-import SplitText from "@/components/UI/SplitText";
-import AnimatedText from "@/components/UI/AnimatedText";
+import React, { useContext, useCallback, memo } from "react";
 import dynamic from "next/dynamic";
-import StarBorder from "@/components/UI/StarBorder";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import ScrollFloat from "@/components/UI/ScrollFloat";
-import { useContext } from "react";
+import { motion } from "framer-motion";
 import { ContactContext } from "@/context/ContactContext";
 import { Step } from "@/components/UI/Steper";
-import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
-import Projects from "@/components/UI/Projects";
-import { SkillsFlow } from "@/components/UI/SkillsFlow";
+
+// Lazy load components that are not immediately visible or are heavy
+const SplitText = dynamic(() => import("@/components/UI/SplitText"), {
+  ssr: false,
+  loading: () => <div className="h-12 rounded bg-white/5 animate-pulse"></div>
+});
+
+const AnimatedText = dynamic(() => import("@/components/UI/AnimatedText"), {
+  ssr: false,
+  loading: () => <div className="h-24 rounded bg-white/5 animate-pulse"></div>
+});
+
+const StarBorder = dynamic(() => import("@/components/UI/StarBorder"), {
+  ssr: false
+});
+
+const ScrollFloat = dynamic(() => import("@/components/UI/ScrollFloat"), {
+  ssr: false
+});
+
+const BackgroundBeams = dynamic(() => import("@/components/UI/BackgroundBeams").then(mod => mod.BackgroundBeams), {
+  ssr: false
+});
+
+const Projects = dynamic(() => import("@/components/UI/Projects"), {
+  ssr: true,
+  loading: () => (
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {[...Array(3)].map((_, index) => (
+        <div key={index} className="h-96 bg-white/5 rounded-xl animate-pulse"></div>
+      ))}
+    </div>
+  )
+});
+
+const SkillsFlow = dynamic(() => import("@/components/UI/SkillsFlow").then(mod => mod.SkillsFlow), {
+  ssr: false,
+  loading: () => <div className="h-40 rounded bg-white/5 animate-pulse"></div>
+});
 
 const DynamicStepper = dynamic(() => import("@/components/UI/Steper"), {
+  ssr: false,
   loading: () => (
     <div className="flex items-center justify-center w-full py-8">
       <motion.div
@@ -41,8 +74,32 @@ const DynamicStepper = dynamic(() => import("@/components/UI/Steper"), {
   ),
 });
 
+// Define props interface for the HeroButton component
+interface HeroButtonProps {
+  onClick: () => void;
+}
+
+// Memoize static components to prevent unnecessary re-renders
+const MemoizedHeroButton = memo(function HeroButton({ onClick }: HeroButtonProps) {
+  return (
+    <StarBorder
+      as="button"
+      btnClassName="hover:opacity-90 transition-colors duration-600 text-white"
+      speed="5s"
+      onClick={onClick}
+    >
+      Let&apos;s Talk
+    </StarBorder>
+  );
+});
+
 export default function Home() {
   const { toggleContact } = useContext(ContactContext);
+
+  // Use useCallback for event handlers to prevent function recreation on render
+  const handleContactClick = useCallback(() => {
+    toggleContact();
+  }, [toggleContact]);
 
   const buttonsFadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -69,6 +126,7 @@ export default function Home() {
       transition: { duration: 0.1, ease: "easeIn" },
     },
   };
+  
   return (
     <>
       <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white relative overflow-hidden">
@@ -109,14 +167,7 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            <StarBorder
-              as="button"
-              btnClassName="hover:opacity-90 transition-colors duration-600 text-white"
-              speed="5s"
-              onClick={toggleContact}
-            >
-              Let&apos;s Talk
-            </StarBorder>
+            <MemoizedHeroButton onClick={handleContactClick} />
             <Link href="#projects">
               <motion.button
                 className="custom-class px-4 py-[16px] rounded-[20px] bg-transparent underline
@@ -190,7 +241,7 @@ export default function Home() {
                   as="button"
                   btnClassName="hover:opacity-80 transition-colors duration-600 text-white font-bold text-xl py-4 px-8"
                   speed="5s"
-                  onClick={toggleContact}
+                  onClick={handleContactClick}
                   style={{
                     transform: "scale(1.01)",
                   }}
@@ -249,7 +300,7 @@ export default function Home() {
               My <span className="highlight">Tech Stack</span>
             </h2>
             <p className="max-w-2xl mx-auto text-lg text-gray-400">
-              Technologies and tools I use to bring Ideas to life
+              Technologies I use to craft amazing digital experiences
             </p>
           </motion.div>
 
@@ -260,16 +311,33 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div  id="Skills">
-            <SkillsFlow />
-
+            <div id="Skills">
+              <SkillsFlow />
             </div>
           </motion.div>
         </div>
       </section>
       
-      {/* Projects Section  */}
-      <Projects limit={3} showViewAll={true} />
+      <section id="Projects" className="relative z-20 py-16 text-white bg-black">
+        <div className="container px-4 mx-auto max-w-7xl">
+          <motion.div
+            className="mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+              <span className="highlight">Featured</span> Projects
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-gray-400">
+              Explore some of my recent work showcasing my skills and expertise
+              in web development.
+            </p>
+          </motion.div>
+          <Projects limit={3} showViewAll={true} />
+        </div>
+      </section>
       
       <section
         id="HowItWorks"
@@ -288,10 +356,8 @@ export default function Home() {
           </ScrollFloat>
           <DynamicStepper
             initialStep={1}
-            onStepChange={(step) => {
-              console.log(step);
-            }}
-            onFinalStepCompleted={() => console.log("All steps completed!")}
+            onStepChange={() => {}}
+            onFinalStepCompleted={() => {}}
             backButtonText="Previous"
             nextButtonText="Next"
             stepCircleContainerClassName="bg-bgDark border-neutral-700"

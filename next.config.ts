@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enables better tree-shaking for reduced bundle size
     optimizeCss: true,
+    // Add proper Turbopack configuration
+    turbo: {
+      resolveAlias: {
+        // Any custom resolve aliases
+      }
+    }
   },
   // Improve asset loading - fixed to include leading slash
   assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
