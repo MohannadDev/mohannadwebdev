@@ -65,16 +65,7 @@ export const NavMenu = ({
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
         transition={{ 
-          // type: "spring",
-          // stiffness: 80,
-          // damping: 20,
-          // mass: 0.8,
-          // restDelta: 0.001,
-          // restSpeed: 0.001,
-          // exit: { 
-          //   type: "tween", 
-          //   duration: 0.5, 
-          //   ease: [0.32, 0.72, 0, 1] }
+   
           type: "tween",
           duration: 0.35,
           ease: "easeOut",

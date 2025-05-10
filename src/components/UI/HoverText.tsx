@@ -124,7 +124,6 @@ const HoverText = ({
     }
   };
 
-  // Find the index of the letter being hovered using element.contains()
   const findHoveredLetterIndex = (e: React.MouseEvent<HTMLSpanElement>): number => {
     if (!containerRef.current) return 0;
     
@@ -158,35 +157,44 @@ const HoverText = ({
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     
+    // First check for direct hits (cursor inside letter bounds)
+    for (let i = 0; i < letterElements.length; i++) {
+      const rect = letterElements[i].getBoundingClientRect();
+      if (
+        mouseX >= rect.left && 
+        mouseX <= rect.right && 
+        mouseY >= rect.top && 
+        mouseY <= rect.bottom
+      ) {
+        return i; // Early return if cursor is directly over a letter
+      }
+    }
+    
+    // If no direct hit, find the closest letter with weighted distance
     let closestIndex = 0;
     let minDistance = Infinity;
     
-    // Compute distance to each letter with weighted preference for x-axis
+    // Compute weighted distances
     for (let i = 0; i < letterElements.length; i++) {
-      const letterRect = letterElements[i].getBoundingClientRect();
+      const rect = letterElements[i].getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
       
-      // Check if cursor is directly within the bounds of this letter (strongest signal)
-      if (
-        mouseX >= letterRect.left && 
-        mouseX <= letterRect.right && 
-        mouseY >= letterRect.top && 
-        mouseY <= letterRect.bottom
-      ) {
-        return i; // Immediately return this index if cursor is inside
-      }
+      // Calculate vector from center of letter to mouse
+      const dx = mouseX - centerX;
+      const dy = mouseY - centerY;
       
-      // Otherwise calculate weighted distance (prioritize x-axis more than y-axis)
-      const letterCenterX = letterRect.left + letterRect.width / 2;
-      const letterCenterY = letterRect.top + letterRect.height / 2;
+      // Weight horizontal position more in horizontal text (4x more than vertical)
+      // This makes horizontal selection more accurate for typical left-to-right text
+      const weightedDistance = Math.sqrt((dx * dx * 4) + (dy * dy));
       
-      // Weight horizontal distance more (3x) than vertical distance for text
-      const xDistance = mouseX - letterCenterX;
-      const yDistance = (mouseY - letterCenterY) / 3; // Reduce y-axis influence
+      // Add slight bias toward letters that are more to the right of the cursor
+      // This helps with selection when mouse is between characters
+      const directionBias = dx > 0 ? 1 : 0;
+      const finalDistance = weightedDistance - (directionBias * 2);
       
-      const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-      
-      if (distance < minDistance) {
-        minDistance = distance;
+      if (finalDistance < minDistance) {
+        minDistance = finalDistance;
         closestIndex = i;
       }
     }
@@ -234,7 +242,6 @@ const HoverText = ({
     if (!sequence.length) return;
     
     let currentStep = 0;
-    
     // Create a new array with all baseColors to start
     const newColors = new Array(letters.length).fill(baseColor);
     setLetterColors(newColors);
@@ -329,7 +336,6 @@ const HoverText = ({
       isAnimatingRef.current = false;
     };
   }, []);
-
   return (
     <span 
       ref={containerRef}

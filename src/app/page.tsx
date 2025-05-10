@@ -133,42 +133,10 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-      {/* Skills Section */}
-      {/* <section
-        id="Skills"
-        className="relative py-20 overflow-hidden text-white bg-gradient-to-b from-black to-bgDark"
-      >
-        <div className="container px-4 mx-auto">
-          <motion.div
-            className="mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
-              My <span className="highlight">Tech Stack</span>
-            </h2>
-            <p className="max-w-2xl mx-auto text-lg text-gray-400">
-              Technologies and tools I use to bring your products to life
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="w-full max-w-4xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <SkillsFlow />
-          </motion.div>
-        </div>
-      </section> */}
-      {/* About Me Section */}
+  
       <section
         id="About"
-        className="relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden"
+        className="z-20 relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden"
       >
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
@@ -300,7 +268,7 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Projects Section - Now using the reusable Projects component */}
+      {/* Projects Section  */}
       <Projects limit={3} showViewAll={true} />
       
       <section

@@ -6,9 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export",
+    "build:static": "next build && touch out/.nojekyll",
+    "deploy": "npm run build:static && gh-pages -d out -t true"
   },
   "dependencies": {
+    "@next/third-parties": "^15.3.2",
     "@prismicio/client": "^7.17.2",
     "@prismicio/next": "^2.0.1",
     "@prismicio/react": "^3.2.1",
@@ -31,6 +35,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "gh-pages": "^6.1.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

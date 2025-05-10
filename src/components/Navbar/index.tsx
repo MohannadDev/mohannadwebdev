@@ -30,7 +30,6 @@ export default function Navbar() {
     setIsMenuOpen(false);
   }, []);
 
-  // Define menu animation variants
   const menuOverlayVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },

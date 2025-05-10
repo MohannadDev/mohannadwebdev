@@ -42,9 +42,9 @@ export default function Footer() {
         >
           Let&apos;s Talk
         </StarBorder>
-        <p  className="my-4 text-lg z-100 ">Don&apos;t like flashy buttons? Reach out at MohannadWebDev@gmail.com</p>
+        <p  className="p-2 my-4 text-lg text-center z-1 ">Don&apos;t like flashy buttons? Reach out at MohannadWebDev@gmail.com</p>
    
-        <div className="flex items-center justify-center gap-4 z-100">
+        <div className="flex items-center justify-center gap-4 z-1">
           <a
             href="https://github.com/MohannadDev"
             target="_blank"
@@ -87,28 +87,5 @@ export default function Footer() {
       </div>
     </footer>
 
-    // <footer className="h-[40rem] w-full flex flex-col md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
-    //   <Spotlight />
-    //   <div className="container flex flex-col items-center justify-center">
-    //   <ScrollReveal
-    //     baseOpacity={0}
-    //     enableBlur={true}
-    //     baseRotation={5}
-    //     blurStrength={10}
-    //     textClassName="highlight text-center"
-    //   >
-    //    Your brilliant ideas require excellent execution.
-    //   </ScrollReveal>
-    //   <StarBorder
-    //     as="a"
-    //     btnClassName="hover:opacity-90 transition-colors duration-600 text-white"
-    //     speed="5s"
-    //     href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
-    //   >
-    //     Let&apos;s Talk
-    //   </StarBorder>
-    //   </div>
-
-    // </footer>
   );
 }

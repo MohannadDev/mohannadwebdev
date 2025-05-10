@@ -7,7 +7,7 @@ interface AnimatedTextProps {
   highlightedText?: string;
   className?: string;
   staggerDuration?: number; // Time between each word animation
-  initialDelay?: number; // Delay before animation starts
+  initialDelay?: number; 
   springConfig?: {
     damping?: number;
     stiffness?: number;

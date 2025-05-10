@@ -19,7 +19,6 @@ export const ContactContext = createContext<ContactContextType>({
 export const ContactProvider = ({ children }: { children: ReactNode }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   
-  // Use useCallback to prevent unnecessary re-renders
   const toggleContact = useCallback(() => {
     setIsContactOpen(prev => !prev);
   }, []);
@@ -28,7 +27,6 @@ export const ContactProvider = ({ children }: { children: ReactNode }) => {
     setIsContactOpen(false);
   }, []);
   
-  // This will be called when the exit animation completes
   const onAnimationComplete = useCallback(() => {
     // We don't need to do anything here since the exit 
     // animation is handled by framer-motion

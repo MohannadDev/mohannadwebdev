@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import React from 'react';
-import StarBorder from './StarBorder';
-// import { useContact } from '@/context/ContactContext';
+import React from "react";
+import StarBorder from "./StarBorder";
 
 interface ContactButtonProps {
   className?: string;
   children?: React.ReactNode;
 }
 
-export default function ContactButton({ className, children = "Let's Talk" }: ContactButtonProps) {
-  // const { openContact } = useContact();
-  
+export default function ContactButton({
+  className,
+  children = "Let's Talk",
+}: ContactButtonProps) {
   return (
     <StarBorder
       as="button"
-      btnClassName={`hover:opacity-90 transition-colors duration-600 text-white ${className || ''}`}
+      btnClassName={`hover:opacity-90 transition-colors duration-600 text-white ${
+        className || ""
+      }`}
       speed="5s"
-      // onClick={openContact}
     >
       {children}
     </StarBorder>

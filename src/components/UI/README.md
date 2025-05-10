@@ -12,69 +12,54 @@ This document provides a comprehensive explanation of the UI components in our p
 
 ## HoverText
 
-`HoverText` is an interactive text component that changes color when you hover over it. It offers different animation patterns for the color change.
+`HoverText` is an interactive text component that provides sequential letter animations on hover. It creates an engaging experience by animating text with customizable effects.
 
-### Implementation Details:
+### Features
 
-1. **Component Structure:**
-   ```tsx
-   interface HoverTextProps {
-     text: string;
-     className?: string;
-     baseColor?: string; 
-     hoverColor?: string;
-     variant?: "left-to-right" | "center-outward" | "random" | "from-cursor";
-     duration?: number;
-     resetDelay?: number;
-   }
-   ```
+- **Multiple Animation Patterns**: 
+  - `left-to-right`: Animates letters sequentially from left to right
+  - `center-outward`: Animations radiate from the center outward
+  - `from-cursor`: Animations start from the letter under the cursor and radiate outward
+  - `random`: Letters animate in random order
 
-2. **State Management:**
-   - `isHovered`: Tracks whether the text is currently being hovered
-   - `letters`: Array of individual characters from the input text
-   - `letterColors`: Array tracking the current color of each letter
-   - `hoveredLetterIndex`: Tracks which letter the cursor is hovering over
-   - `animationComplete`: Indicates when the animation has finished
-   - The component uses multiple refs to optimize performance and prevent unnecessary re-renders
+- **Precise Cursor Detection**: 
+  - Uses advanced algorithms to detect which letter the cursor is hovering over
+  - Prioritizes horizontal cursor position for improved text selection
+  - Optimized performance with debouncing and thresholds
 
-3. **Animation Variants:**
-   - **left-to-right:** Color change moves sequentially from the first letter to the last
-   - **center-outward:** Colors spread from the middle letter to both edges simultaneously
-   - **random:** Letters change color in a randomized order (shuffled using Fisher-Yates algorithm)
-   - **from-cursor:** Animation starts precisely at the letter under your cursor and radiates outward
+- **Customizable Styling**:
+  - Configurable base and hover colors
+  - Adjustable animation duration and delay
+  - Support for custom CSS classes
 
-4. **Cursor Detection:**
-   The component uses multiple strategies to accurately detect which letter is under the cursor:
-   - Direct hit testing using `document.elementFromPoint()`
-   - Bounding box intersection testing
-   - Weighted Euclidean distance calculation (prioritizing horizontal position)
-   - Movement threshold detection to prevent "jitter"
+### Usage
 
-5. **Performance Optimizations:**
-   - Debounced mouse movement handling (5ms)
-   - Distance threshold to skip processing small movements
-   - Animation state tracking with refs
-   - Prevents interrupting animations in progress
-
-6. **Core Functions:**
-   - `handleMouseEnter`: Initializes the animation when hovering begins
-   - `handleMouseMove`: Tracks cursor position and updates the animation start point
-   - `findHoveredLetterIndex`: Complex algorithm to accurately identify the hovered letter
-   - `findNearestLetterIndex`: Fallback method using distance calculation
-   - `animateLetters`: Controls the timing and sequence of color changes
-   - `getAnimationSequence`: Determines the order in which letters change color
-
-### Usage Example:
 ```tsx
-<HoverText
-  text="Hover over me"
+// Basic usage
+<HoverText text="Interactive Text" />
+
+// With custom styling and behavior
+<HoverText 
+  text="Hover over me!" 
+  baseColor="#666666"
+  hoverColor="#ff3300"
   variant="from-cursor"
-  baseColor="#929292"
-  hoverColor="#ffffff"
-  duration={0.2}
-  resetDelay={1500}
+  duration={0.5}
+  resetDelay={2000}
 />
 ```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | string | required | The text to be displayed and animated |
+| `className` | string | `""` | Additional CSS classes |
+| `baseColor` | string | `var(--color-textMuted)` | Default text color |
+| `hoverColor` | string | `var(--color-textHighlight)` | Color during hover animation |
+| `variant` | string | `"left-to-right"` | Animation pattern (`"left-to-right"`, `"center-outward"`, `"from-cursor"`, or `"random"`) |
+| `duration` | number | `0.3` | Animation duration in seconds |
+| `resetDelay` | number | `1000` | Delay before resetting animation after hover ends (ms) |
 
 ## SplitText
 
@@ -136,61 +121,48 @@ This document provides a comprehensive explanation of the UI components in our p
 
 ## ClickSpark
 
-`ClickSpark` adds a fun sparkle effect whenever a user clicks anywhere on the wrapped element.
+`ClickSpark` creates a spark/particle effect when users click anywhere on the page, enhancing interactivity with visual feedback.
 
-### Implementation Details:
+### Features
 
-1. **Component Structure:**
-   ```tsx
-   interface ClickSparkProps {
-     sparkColor?: string;
-     sparkSize?: number;
-     sparkRadius?: number;
-     sparkCount?: number;
-     duration?: number;
-     easing?: "linear" | "ease-in" | "ease-out" | "ease-in-out";
-     extraScale?: number;
-     children?: React.ReactNode;
-   }
-   ```
+- Customizable spark colors, sizes, and quantities
+- Responsive to window resizing
+- Various animation easing functions
+- Canvas-based for optimal performance
 
-2. **Canvas-Based Rendering:**
-   - Uses HTML Canvas API for high-performance rendering
-   - Creates an overlay canvas that captures clicks and renders sparks
-   - Automatically resizes with the parent element using ResizeObserver
+### Usage
 
-3. **Spark Generation and Physics:**
-   - Each spark is defined by: position, angle, and start time
-   - Sparks are arranged in a circular pattern around the click point
-   - Each spark animates outward with fading opacity
-   - Custom easing functions control the animation curve
-
-4. **Animation Loop:**
-   - Uses `requestAnimationFrame` for smooth, efficient animation
-   - Calculates each spark's position based on elapsed time
-   - Clears and redraws the canvas on every frame
-   - Automatically removes sparks after their animation completes
-
-5. **Optimization Techniques:**
-   - Canvas clearing and redrawing only when necessary
-   - Efficient data structures for tracking spark state
-   - Debounced resize handling to prevent performance issues
-   - Proper cleanup to prevent memory leaks
-
-### Usage Example:
 ```tsx
+// Wrap content with the ClickSpark component
+<ClickSpark>
+  <YourContent />
+</ClickSpark>
+
+// With custom settings
 <ClickSpark
   sparkColor="#ffcc00"
-  sparkSize={8}
+  sparkSize={12}
   sparkRadius={20}
-  sparkCount={12}
-  duration={500}
+  sparkCount={10}
+  duration={600}
+  easing="ease-out"
 >
-  <button className="px-4 py-2 bg-blue-500 text-white rounded">
-    Click me for sparkles!
-  </button>
+  <YourContent />
 </ClickSpark>
 ```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `sparkColor` | string | `"#fff"` | Color of the spark particles |
+| `sparkSize` | number | `10` | Size of each spark particle |
+| `sparkRadius` | number | `15` | Radius of the spark explosion |
+| `sparkCount` | number | `8` | Number of spark particles per click |
+| `duration` | number | `400` | Animation duration in milliseconds |
+| `easing` | string | `"ease-out"` | Animation easing function |
+| `extraScale` | number | `1.0` | Additional scale factor for the sparks |
+| `children` | ReactNode | - | Content to wrap with spark effects |
 
 ## AnimatedText
 
@@ -269,7 +241,7 @@ This document provides a comprehensive explanation of the UI components in our p
 <StarBorder
   as="div"
   color="#ffcc00"
-  speed="8s"
+  speed="8s" 
   className="w-64"
 >
   Content inside a star-bordered container

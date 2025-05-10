@@ -2,10 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import ProjectCard from "./ProjectCard";
 
-// Project data interface
 export interface ProjectData {
   id: number;
   title: string;
@@ -16,7 +14,6 @@ export interface ProjectData {
   githubUrl: string;
 }
 
-// Sample project data
 export const projectsData: ProjectData[] = [
   {
     id: 1,
@@ -53,11 +50,10 @@ interface ProjectsProps {
 }
 
 export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
-  // If limit is specified, only show that many projects
   const displayedProjects = limit ? projectsData.slice(0, limit) : projectsData;
 
   return (
-    <section className="relative py-20 pb-24 text-white bg-black">
+    <section className="relative z-20 py-20 pb-24 text-white bg-black">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
       <div className="container relative z-10 px-4 mx-auto max-w-7xl">
@@ -106,7 +102,7 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <Link href="/projects">
+           
               <motion.a
                 className="px-6 py-3 font-medium text-white transition-colors border rounded-lg border-white/20 hover:bg-white/10"
                 whileHover={{ scale: 1.05 }}
@@ -115,7 +111,6 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
               >
                 View All Projects
               </motion.a>
-            </Link>
           </motion.div>
         )}
       </div>
