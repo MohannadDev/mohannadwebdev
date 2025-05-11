@@ -94,7 +94,7 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            Front-End Developer & Next Enthusiast
+            Front-End Developer & <b className="highlight"> Next Enthusiast</b>
           </motion.p>
 
           <AnimatedText
@@ -136,7 +136,7 @@ export default function Home() {
   
       <section
         id="About"
-        className="z-20 relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden"
+        className="z-1 relative flex items-center justify-center min-h-[80vh] bg-black py-16 text-white overflow-hidden"
       >
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 

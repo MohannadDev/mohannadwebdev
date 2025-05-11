@@ -5,16 +5,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true
   },
-  // Optimize for single-page application
-  trailingSlash: true, // Ensures consistent URLs
-  output: 'export', // Static HTML export for single-page apps
-  // Disable server components as they're not needed for a single-page app
+  trailingSlash: true, 
   experimental: {
-    // Enables better tree-shaking for reduced bundle size
     optimizeCss: true,
   },
-  // Improve asset loading - fixed to include leading slash
   assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
+
 };
 
 export default nextConfig;

@@ -53,7 +53,7 @@ export default function Projects({ limit, showViewAll = true }: ProjectsProps) {
   const displayedProjects = limit ? projectsData.slice(0, limit) : projectsData;
 
   return (
-    <section className="relative z-20 py-20 pb-24 text-white bg-black">
+    <section className="relative py-20 pb-24 text-white bg-black z-1" id="Projects">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
       <div className="container relative z-10 px-4 mx-auto max-w-7xl">
