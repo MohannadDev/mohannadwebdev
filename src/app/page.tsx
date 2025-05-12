@@ -104,7 +104,7 @@ export default function Home() {
             staggerDuration={0.04}
           />
           <motion.div
-            className="flex items-center justify-center gap-4 "
+            className="z-0 flex items-center justify-center gap-4"
             variants={buttonsFadeInUpVariants}
             initial="hidden"
             animate="show"
@@ -117,7 +117,7 @@ export default function Home() {
             >
               Let&apos;s Talk
             </StarBorder>
-            <Link href="#projects">
+            <Link href="#Projects">
               <motion.button
                 className="custom-class px-4 py-[16px] rounded-[20px] bg-transparent underline
                       text-shadow-white 

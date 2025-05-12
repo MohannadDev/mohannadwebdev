@@ -20,8 +20,7 @@ const skills: Skill[] = [
   { name: "CSS3", icon: "css", color: "#1572B6" },
   { name: "HTML5", icon: "html", color: "#E34F26" },
   { name: "Git", icon: "git", color: "#F05032" },
-  { name: "Figma", icon: "figma", color: "#F24E1E" },
-  { name: "Vercel", icon: "vercel", color: "#000000" },
+  { name: "Figma", icon: "figma", color: "#F24E1E" }
 ];
 
 const iconPaths: Record<string, React.ReactNode> = {
@@ -77,8 +76,7 @@ const iconPaths: Record<string, React.ReactNode> = {
       d="M8 0H5.5C3.6 0 2 1.6 2 3.5C2 5.4 3.6 7 5.5 7H8V0Z M8 7H5.5C3.6 7 2 8.6 2 10.5C2 12.4 3.6 14 5.5 14H8V7Z M8 14H5.5C3.6 14 2 15.6 2 17.5C2 19.4 3.6 21 5.5 21C7.4 21 9 19.4 9 17.5V14H8Z M9 0H11.5C13.4 0 15 1.6 15 3.5C15 5.4 13.4 7 11.5 7H9V0Z M15 10.5C15 8.6 13.4 7 11.5 7C9.6 7 8 8.6 8 10.5C8 12.4 9.6 14 11.5 14C13.4 14 15 12.4 15 10.5Z"
       fill="currentColor"
     />
-  ),
-  vercel: <path d="M12 2L2 19.5h20L12 2z" fill="currentColor" />,
+  )
 };
 
 export function SkillsFlow({ className }: { className?: string }) {
@@ -111,21 +109,13 @@ export function SkillsFlow({ className }: { className?: string }) {
   return (
     <div className={cn("relative overflow-hidden w-full", className)}>
       <motion.div
-        className="flex py-6 space-x-8"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 25,
-            ease: "linear"
-          },
-        }}
+        className="container flex flex-wrap justify-center gap-3 py-6 space-x-4"
+    
       >
-        {[...skills, ...skills].map((skill, index) => (
+        {skills.map((skill, index) => (
           <motion.div
             key={`${skill.name}-${index}`}
-            className="relative flex items-center justify-center flex-shrink-0 w-12 h-12 transition-all duration-500 border rounded-full cursor-pointer bg-white/10 backdrop-blur-sm border-white/20 hover:scale-110 hover:border-white/40 hover:shadow-glow"
+            className="relative flex items-center justify-center flex-shrink-0 m-0 transition-all duration-500 border rounded-full cursor-pointer h-14 w-14 bg-white/10 backdrop-blur-sm border-white/20 hover:scale-110 hover:border-white/40 hover:shadow-glow"
             style={{ 
               color: skill.color,
               boxShadow: "0 0 0 rgba(255, 255, 255, 0)",

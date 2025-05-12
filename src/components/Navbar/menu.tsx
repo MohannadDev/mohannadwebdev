@@ -61,7 +61,7 @@ export const NavMenu = ({
   if (isMobile) {
     return (
       <motion.div
-        className="fixed top-0 right-0 w-4/5 h-screen pt-20 bg-white z-70"
+        className="fixed top-0 right-0 w-4/5 h-screen pt-20 bg-bgDark z-70"
         initial={{ opacity: 0, x: "100%" }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
