@@ -83,15 +83,15 @@ import React, {
   
     return (
       <div
-        className="flex flex-col items-center justify-center flex-1 p-4 "
+        className="flex flex-col flex-1 justify-center items-center p-4"
         {...rest}
       >
         <div
-          className={`mx-auto w-full border-2 border-b-bgLight max-w-md rounded-4xl overflow-hidden ${stepCircleContainerClassName}`}
+          className={`overflow-hidden mx-auto w-full max-w-md border-2 border-b-bgLight rounded-4xl ${stepCircleContainerClassName}`}
        
         >
           <div
-            className={`${stepContainerClassName} flex w-full items-center p-8`}
+            className={`flex items-center p-8 w-full ${stepContainerClassName}`}
           >
             {stepsArray.map((_, index) => {
               const stepNumber = index + 1;
@@ -130,7 +130,7 @@ import React, {
             isCompleted={isCompleted}
             currentStep={currentStep}
             direction={direction}
-            className={`space-y-2 px-8 ${contentClassName}`}
+            className={`px-8 space-y-2 ${contentClassName}`}
           >
             {stepsArray[currentStep - 1]}
           </StepContentWrapper>
@@ -298,7 +298,7 @@ import React, {
     return (
       <motion.div
         onClick={handleClick}
-        className="relative outline-none cursor-pointer focus:outline-none"
+        className="relative cursor-pointer outline-none focus:outline-none"
         animate={status}
         initial={false}
         role="button"
@@ -312,12 +312,12 @@ import React, {
       >
         <motion.div
           variants={{
-            inactive: { scale: 1, backgroundColor: "#222", color: "#a3a3a3" },
-            active: { scale: 1, backgroundColor: "#00d8ff", color: "#00d8ff" },
-            complete: { scale: 1, backgroundColor: "#00d8ff", color: "#3b82f6" },
+            inactive: { scale: 1, backgroundColor: "#222", color: "#929292" },
+            active: { scale: 1, backgroundColor: "#929292", color: "#929292" },
+            complete: { scale: 1, backgroundColor: "#929292", color: "#3b82f6" },
           }}
           transition={{ duration: 0.3 }}
-          className="flex items-center justify-center w-8 h-8 font-semibold rounded-full"
+          className="flex justify-center items-center w-8 h-8 font-semibold rounded-full"
         >
           {status === "complete" ? (
             <CheckIcon className="w-4 h-4 text-black" />
@@ -338,7 +338,7 @@ import React, {
   function StepConnector({ isComplete }: StepConnectorProps) {
     const lineVariants: Variants = {
       incomplete: { width: 0, backgroundColor: "transparent" },
-      complete: { width: "100%", backgroundColor: "#00d8ff" },
+      complete: { width: "100%", backgroundColor: "#929292" },
     };
   
     return (
