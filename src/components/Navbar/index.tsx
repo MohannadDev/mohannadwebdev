@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 z-10 w-full bg-bgDark backdrop-blur-md "
+        className="fixed top-0 left-0 z-10 w-full bg-transparent backdrop-blur-md "
         initial={{ opacity: 0, y: -70 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

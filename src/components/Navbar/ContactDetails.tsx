@@ -84,7 +84,7 @@ export default function ContactDetails({
               speed="5s"
             >
               <a
-                href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
+                href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=Hello%2C%0A%0AI%20found%20your%20profile%20and%20think%20you’d%20be%20a%20great%20fit%20for%20a%20project%20I’m%20working%20on.%20I’d%20appreciate%20your%20insights.%0A%0ACan%20we%20schedule%20a%20time%20to%20chat%3F"
                 className="flex items-center justify-center"
               >
                 <span className="mr-2 highlight ">
@@ -140,7 +140,7 @@ export default function ContactDetails({
                 </a>
 
                 <a
-                  href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
+                  href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=Hello%2C%0A%0AI%20found%20your%20profile%20and%20think%20you’d%20be%20a%20great%20fit%20for%20a%20project%20I’m%20working%20on.%20I’d%20appreciate%20your%20insights.%0A%0ACan%20we%20schedule%20a%20time%20to%20chat%3F"
                   className="block transition-colors duration-300 hover:text-white"
                 >
                   <HoverText
@@ -153,7 +153,7 @@ export default function ContactDetails({
               </div>
               <div className="text-right">
                 <a
-                  href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=I%20recently%20discovered%20your%20profile%20and%20was%20really%20impressed%20by%20your%20work.%20I%20have%20a%20project%20in%20mind%20and%20would%20greatly%20appreciate%20your%20expertise%20and%20insights.%0A%0ACould%20we%20schedule%20a%20time%20to%20chat%3F"
+                  href="mailto:mohannadwebdev@gmail.com?subject=Collaboration%20Opportunity&body=Hello%2C%0A%0AI%20found%20your%20profile%20and%20think%20you’d%20be%20a%20great%20fit%20for%20a%20project%20I’m%20working%20on.%20I’d%20appreciate%20your%20insights.%0A%0ACan%20we%20schedule%20a%20time%20to%20chat%3F"
                   className="transition-colors duration-300 hover:text-white"
                 >
                   <HoverText

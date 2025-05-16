@@ -7,6 +7,7 @@ import ClickSpark from "../components/UI/ClickSpark";
 import { ContactProvider } from "@/context/ContactContext";
 import ContactDetailsWrapper from "@/components/Navbar/ContactDetailsWrapper";
 
+
 export const metadata: Metadata = {
   title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
   description:
@@ -78,6 +79,7 @@ const bodyFont = IBM_Plex_Sans({
   variable: "--font-body",
 });
 
+
 export default function RootLayout({
   children,
 }: {
@@ -88,8 +90,9 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} antialiased`}
     >
-      <body className="flex flex-col min-h-screen bg-bg-white dark:bg-bg-dark">
-        <ContactProvider>
+      <body className="flex flex-col min-h-screen bg-bg-white dark:bg-bg-dark" id="smooth-wrapper">
+      <div id="smooth-content">
+      <ContactProvider>
           <ClickSpark
             sparkColor="#fff"
             sparkSize={10}
@@ -103,6 +106,8 @@ export default function RootLayout({
             <Footer />
           </ClickSpark>
         </ContactProvider>
+         </div>
+
       </body>
     </html>
   );
