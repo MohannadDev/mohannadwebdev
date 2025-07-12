@@ -41,7 +41,7 @@ export default function Footer() {
         fill="white"
       />
       <div className="container flex flex-col items-center justify-center ">
-        <p className="z-10 text-3xl paragraph_Fade highlight ">
+        <p className="z-10 p-4 text-xl md:text-3xl paragraph_Fade highlight ">
           Your brilliant ideas require excellent execution.
         </p>
         <StarBorder
@@ -58,7 +58,7 @@ export default function Footer() {
         >
           Let&apos;s Talk
         </StarBorder>
-        <p className="p-2 my-4 text-lg text-center z-1 ">
+        <p className="p-4 my-4 text-lg text-center z-1 ">
           Don&apos;t like flashy buttons? Reach out at MohannadWebDev@gmail.com
         </p>
         <div className="flex items-center justify-center gap-4 z-1">

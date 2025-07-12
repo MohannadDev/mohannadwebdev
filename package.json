@@ -12,6 +12,7 @@
     "deploy": "npm run build:static && gh-pages -d out -t true"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@next/third-parties": "^15.3.2",
     "@prismicio/client": "^7.17.2",
     "@prismicio/next": "^2.0.1",
