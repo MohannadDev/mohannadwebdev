@@ -40,8 +40,8 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.7,
-          ease: "power3.out",
+          duration: 0.3,
+          ease: "power1.inOut",
           delay: 0.8,
           stagger: 0.3,
           scrub: true
@@ -53,8 +53,10 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.6,
+          duration: 0.4,
           delay: 0.1,
+          ease: "power1.inOut",
+
           scrollTrigger: {
             trigger: ".about-heading",
             start: "top 80%",
@@ -69,8 +71,9 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.6,
+          duration: 0.4,
           delay: 0.3,
+          ease: "power1.inOut",
           scrollTrigger: {
             trigger: ".about-paragraphs",
             start: "top 80%",
@@ -85,7 +88,9 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.6,
+          ease: "power1.inOut",
+
+          duration: 0.4,
           delay: 0.5,
           scrollTrigger: {
             trigger: ".about-button",
@@ -102,7 +107,9 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.6,
+          duration: 0.4,
+          ease: "power1.inOut",
+
           scrollTrigger: {
             trigger: ".tech-stack-heading",
             start: "top 80%",
@@ -117,8 +124,10 @@ export default function Home() {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.8,
+          duration: 0.5,
           delay: 0.2,
+          ease: "power1.inOut",
+
           scrollTrigger: {
             trigger: ".tech-stack-content",
             start: "top 80%",
@@ -136,7 +145,7 @@ export default function Home() {
           opacity: 1,
           duration: 0.4,
           delay: 0.2,
-          ease: "power3.out"
+          ease: "power1.inOut"
         }
       );
     });
