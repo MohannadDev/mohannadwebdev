@@ -4,10 +4,9 @@ import SplitText from "@/components/UI/SplitText";
 import dynamic from "next/dynamic";
 import StarBorder from "@/components/UI/StarBorder";
 import Link from "next/link";
-import { useContext, useLayoutEffect } from "react";
-import { ContactContext } from "@/context/ContactContext";
+import { useLayoutEffect, useState } from "react";
 import { Step } from "@/components/UI/Steper";
-import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
+// import { BackgroundBeams } from "@/components/UI/BackgroundBeams";
 import Projects from "@/components/UI/Projects";
 import { SkillsFlow } from "@/components/UI/SkillsFlow";
 import gsap from "gsap";
@@ -17,22 +16,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 const DynamicStepper = dynamic(() => import("@/components/UI/Steper"), {
   loading: () => (
-    <div className="flex items-center justify-center w-full py-8">
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-40 h-1 overflow-hidden rounded bg-white/10">
-          <div className="h-full bg-white/40 animate-pulse"></div>
+    <div className="flex justify-center items-center py-8 w-full">
+      <div className="flex flex-col gap-2 items-center">
+        <div className="overflow-hidden w-40 h-1 rounded bg-white/10">
+          <div className="h-full animate-pulse bg-white/40"></div>
         </div>
       </div>
     </div>
-  ),
+  )
 });
 
 export default function Home() {
-  const { toggleContact } = useContext(ContactContext);
+  const [showContact, setShowContact] = useState(false);
+
+  const handleContactToggle = () => {
+    setShowContact((prev) => !prev);
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero section animations
       gsap.fromTo(
         ".paragraph_Fade",
         { opacity: 0 },
@@ -42,11 +44,10 @@ export default function Home() {
           ease: "power3.out",
           delay: 0.8,
           stagger: 0.3,
-          scrub: true,
+          scrub: true
         }
       );
 
-      // About section animations
       gsap.fromTo(
         ".about-heading",
         { opacity: 0 },
@@ -58,8 +59,8 @@ export default function Home() {
             trigger: ".about-heading",
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+            toggleActions: "play none none reverse"
+          }
         }
       );
 
@@ -74,8 +75,8 @@ export default function Home() {
             trigger: ".about-paragraphs",
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+            toggleActions: "play none none reverse"
+          }
         }
       );
 
@@ -90,8 +91,8 @@ export default function Home() {
             trigger: ".about-button",
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+            toggleActions: "play none none reverse"
+          }
         }
       );
 
@@ -106,8 +107,8 @@ export default function Home() {
             trigger: ".tech-stack-heading",
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+            toggleActions: "play none none reverse"
+          }
         }
       );
 
@@ -122,8 +123,8 @@ export default function Home() {
             trigger: ".tech-stack-content",
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+            toggleActions: "play none none reverse"
+          }
         }
       );
 
@@ -135,7 +136,7 @@ export default function Home() {
           opacity: 1,
           duration: 0.4,
           delay: 0.2,
-          ease: "power3.out",
+          ease: "power3.out"
         }
       );
     });
@@ -145,8 +146,8 @@ export default function Home() {
   return (
     <>
       <section className="Hero flex flex-col items-center justify-center min-h-screen bg-bgDark pt-[70px] md:pt-[80px] text-white relative overflow-hidden">
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <BackgroundBeams />
+        <div className="overflow-hidden absolute inset-0 w-full h-full">
+          {/* <BackgroundBeams /> */}
         </div>
 
         <div className="flex justify-center flex-col px-4 mx-auto md:max-w-[90vw] mt-10 md:mt-16 relative z-10">
@@ -165,18 +166,18 @@ export default function Home() {
             Front-End Developer &{" "}
             <b className="highlight"> Next.JS Enthusiast</b>
           </p>
-          <p className="mb-6 text-start md:text-xl paragraph_Fade">
+          <p className="mb-6 text-center md:text-xl paragraph_Fade">
             I craft clean, lightning-fast web experiences with Next.js, React,
             and modern CSS—whether it&apos;s a single-page landing site or a
             complex data dashboard. Share your ambitions, and we&apos;ll craft
             the web solution to match.
           </p>
-          <div className="z-0 flex items-center justify-center gap-4 hero-buttons">
+          <div className="flex z-0 gap-4 justify-center items-center hero-buttons">
             <StarBorder
               as="button"
               btnClassName="hover:opacity-90 transition-colors duration-600 text-white"
               speed="5s"
-              onClick={toggleContact}
+              onClick={handleContactToggle}
             >
               Let&apos;s Talk
             </StarBorder>
@@ -201,7 +202,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
         <div className="container relative z-10 px-4 mx-auto max-w-7xl md:px-8">
-          <div className="flex flex-col items-center gap-10 md:flex-row">
+          <div className="flex flex-col gap-10 items-center md:flex-row">
             <div className="flex-1 space-y-8">
               <h2 className="text-4xl font-bold md:text-6xl about-heading">
                 <span>I&apos;m a web developer & designer</span>
@@ -232,9 +233,9 @@ export default function Home() {
                   as="button"
                   btnClassName="hover:opacity-80 transition-colors duration-600 text-white font-bold text-xl py-4 px-8 "
                   speed="5s"
-                  onClick={toggleContact}
+                  onClick={handleContactToggle}
                   style={{
-                    transform: "scale(1.01)",
+                    transform: "scale(1.01)"
                   }}
                 >
                   Let&apos;s Talk
@@ -245,18 +246,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative py-6 overflow-hidden text-white bg-black">
+      <section className="overflow-hidden relative py-6 text-white bg-black">
         <div className="container px-4 mx-auto">
           <div className="mb-16 text-center tech-stack-heading">
             <h2 className="mb-4 text-4xl font-bold md:text-5xl">
               My <span className="highlight">Tech Stack</span>
             </h2>
-            <p className="max-w-2xl mx-auto text-lg text-gray-400">
+            <p className="mx-auto max-w-2xl text-lg text-gray-400">
               Technologies and tools I use to bring Ideas to life
             </p>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto tech-stack-content">
+          <div className="mx-auto w-full max-w-4xl tech-stack-content">
             <div id="Skills">
               <SkillsFlow />
             </div>
@@ -360,6 +361,15 @@ export default function Home() {
           </DynamicStepper>
         </div>
       </section>
+
+      {/* Contact Panel */}
+      <div
+        className={`contact-panel ${
+          showContact ? "showContact" : "hideContact"
+        }`}
+      >
+        {/* Contact details go here */}
+      </div>
     </>
   );
 }

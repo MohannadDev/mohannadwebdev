@@ -7,7 +7,6 @@ import ClickSpark from "../components/UI/ClickSpark";
 import { ContactProvider } from "@/context/ContactContext";
 import ContactDetailsWrapper from "@/components/Navbar/ContactDetailsWrapper";
 
-
 export const metadata: Metadata = {
   title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
   description:
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
     "portfolio",
     "TypeScript",
     "JavaScript",
-    "Tailwind CSS",
+    "Tailwind CSS"
   ],
   authors: [{ name: "Mohannad", url: "https://github.com/MohannadDev" }],
   creator: "Mohannad",
@@ -39,49 +38,48 @@ export const metadata: Metadata = {
         url: "/images/portfolio-preview.jpg",
         width: 1200,
         height: 630,
-        alt: "Mohannad - Creative Developer Portfolio Preview",
-      },
-    ],
+        alt: "Mohannad - Creative Developer Portfolio Preview"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "Mohannad - Creative Front-End Developer & Next Enthusiast",
     description:
       "Portfolio showcasing innovative web development projects and modern designs",
-    images: ["/images/portfolio-preview.jpg"],
+    images: ["/images/portfolio-preview.jpg"]
   },
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
-      follow: true,
-    },
+      follow: true
+    }
   },
-  category: "Technology",
+  category: "Technology"
 };
 
 export const viewport: Viewport = {
   width: "device-width",
-  initialScale: 1,
+  initialScale: 1
 };
 
 const headingFont = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "700"],
   display: "swap",
-  variable: "--font-heading",
+  variable: "--font-heading"
 });
 const bodyFont = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
   display: "swap",
-  variable: "--font-body",
+  variable: "--font-body"
 });
 
-
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
@@ -90,24 +88,28 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} antialiased`}
     >
-      <body className="flex flex-col min-h-screen bg-bg-white dark:bg-bg-dark" id="smooth-wrapper">
-      <div id="smooth-content">
-      <ContactProvider>
-          <ClickSpark
-            sparkColor="#fff"
-            sparkSize={10}
-            sparkRadius={15}
-            sparkCount={8}
-            duration={400}
-          >
-            <Navbar />
-            <ContactDetailsWrapper />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </ClickSpark>
-        </ContactProvider>
-         </div>
-
+      <body>
+        <div
+          className="flex flex-col min-h-screen bg-bg-white dark:bg-bg-dark"
+          id="smooth-wrapper"
+        >
+          <div id="smooth-content">
+            <ContactProvider>
+              <ClickSpark
+                sparkColor="#fff"
+                sparkSize={10}
+                sparkRadius={15}
+                sparkCount={8}
+                duration={400}
+              >
+                <Navbar />
+                <ContactDetailsWrapper />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </ClickSpark>
+            </ContactProvider>
+          </div>
+        </div>
       </body>
     </html>
   );
